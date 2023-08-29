@@ -1,0 +1,29 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Activity {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  description   String
+  category      String
+  city          String
+  place         String
+  createdAt     DateTime @default(now())
+  startDate     DateTime
+  endDate       DateTime
+  imagesURL     String[] @default(["https://images.unsplash.com/photo-1618769021747-aca9fdb9e513?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"])
+  locationValue String
+  address       String
+  isPopuler     Boolean
+  isFree        Boolean
+  price         Int?
+}
