@@ -3,10 +3,10 @@ import React from 'react';
 import {EffectFade, Autoplay} from 'swiper/modules';
 import {Swiper, SwiperSlide, useSwiper} from 'swiper/react';
 import { Activity } from '@prisma/client';
-import Image from "next/image"
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/effect-fade';
+import SwiperCard from "@/components/SwiperCard";
 
 interface Props  {
     populerActivities: Activity[]
@@ -28,7 +28,8 @@ const SwiperHome: React.FC<Props> = ({populerActivities}) => {
                 
                 {populerActivities.map(activity => (
                     <SwiperSlide className='relative' key={activity.id}>
-                    <Image fill src={activity.imagesURL[0]} className="object-cover" alt=""/>
+                    {/*<Image fill src={activity.imagesURL[0]} className="object-cover" alt=""/>*/}
+                        <SwiperCard activity={activity}/>
                     </SwiperSlide>
                 ))}
             
