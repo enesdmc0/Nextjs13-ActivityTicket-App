@@ -133,7 +133,7 @@ const ChairLayout = () => {
                     </div>
                 </div>
             </div>
-            <div className="border-4 h-16 flex items-center justify-center rounded-md">Sahne</div>
+            <div className="border-4 h-16 flex items-center justify-center rounded-md">Scene</div>
 
         </div>
     );

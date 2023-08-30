@@ -5,7 +5,8 @@ const nextConfig = {
             {hostname: "plus.unsplash.com"},
             {hostname: "images.unsplash.com"}
         ]
-    }
+    },
+    reactStrictMode: false
 }
 
 module.exports = nextConfig

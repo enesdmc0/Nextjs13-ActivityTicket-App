@@ -1,20 +1,14 @@
-import SwiperHome from "@/components/SwiperHome";
-import { Separator } from "@/components/ui/separator";
-import { Input } from "@/components/ui/input";
-import Card from "@/components/Card"
 import prisma from "@/lib/prismadb"
-import {DatePickerWithRange} from "@/components/ui/date-range-picker";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
-import {Button} from "@/components/ui/button";
+import {Separator} from "@/components/ui/separator";
+import SwiperPopoulerActivities from "../components/SwiperPopulerActivities";
+import Filter from "../components/Filter";
+import Search from "../components/Search";
+import ActivityList from "../components/ActivityList";
+
 
 export default async function Home() {
     const currentDate = new Date();
+    //GET ALL ACTIVITIES
     const activities = await prisma?.activity.findMany({
         where: {
             endDate: {
@@ -22,22 +16,14 @@ export default async function Home() {
             }
         }
     })
+
+    //GET POPULER ACTIVITIES
     const populerActivities = await prisma?.activity.findMany({
         where: {
             isPopuler: true
         }
     })
-    let categories: any = [];
-    let cities: any = [];
-    let places: any = [];
-    if (activities) {
-        const uniqueCategories = new Set(activities.map(activity => activity.category));
-        categories = Array.from(uniqueCategories);
-        const uniqueCities = new Set(activities.map(activity => activity.city));
-        cities = Array.from(uniqueCities);
-        const uniquePlaces = new Set(activities.map(activity => activity.place));
-        places = Array.from(uniquePlaces);
-    }
+
 
     if (!activities) {
         return (
@@ -53,60 +39,35 @@ export default async function Home() {
 
     return (
         <div className="mt-10 space-y-10 w-3/4 mx-auto">
+
             <div className="space-y-5">
                 <h2 className="text-xl font-bold">Populer Activities</h2>
-                <SwiperHome populerActivities={populerActivities} />
+                <SwiperPopoulerActivities populerActivities={populerActivities}/>
             </div>
-            <Separator />
+
+            <Separator/>
+
             <div className="space-y-5">
                 <h2 className="text-xl font-bold">Filter Activities</h2>
-                <div className="flex gap-12">
-                    <DatePickerWithRange/>
-                    <Select>
-                        <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Category" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {categories.map((category: string) => (
-                                <SelectItem key={category} value="category">{category}</SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                    <Select>
-                        <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="City" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {cities.map((city: string) => (
-                                <SelectItem key={city} value="category">{city}</SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                    <Select>
-                        <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Place" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {places.map((place: string) => (
-                                <SelectItem key={place} value="category">{place}</SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                    <Button>Search</Button>
-                </div>
+                <Filter activities={activities}/>
             </div>
-            <Separator />
-            <Input type="text" placeholder="Search activity..." />
-            <div className="grid grid-cols-3 gap-5">
-                {
-                    activities.map(activity => (
-                        <Card key={activity.id} activity={activity} />
-                    ))
-                }
 
+            <Separator/>
+
+            <div className="space-y-5">
+                <h2 className="text-xl font-bold">Search Activities</h2>
+                <Search/>
             </div>
-            <Separator />
-            <Separator />
+
+            <Separator/>
+
+            <div className="space-y-5">
+                <h2 className="text-xl font-bold">Activities</h2>
+               <ActivityList activities={activities}/>
+            </div>
+
+            <Separator/>
+            <Separator/>
         </div>
     )
 }
