@@ -27,8 +27,8 @@ const SwiperDetail: React.FC<Props> = ({activity}) => {
                 }}
             >
                 
-                {activity.imagesURL.map(image => (
-                    <SwiperSlide className='relative' key={activity.id}>
+                {activity.imagesURL.map((image, index) => (
+                    <SwiperSlide className='relative' key={index}>
                     <Image fill src={image} className="object-cover" alt=""/>
                     </SwiperSlide>
                 ))}

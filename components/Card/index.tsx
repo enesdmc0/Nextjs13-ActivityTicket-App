@@ -12,8 +12,8 @@ interface Props {
 }
 
 
-const CardComponent: React.FC<Props> = ({ className, activity }, ...props) => {
-    const demoId = "123"
+const CardComponent: React.FC<Props> = ({ className, activity, ...props }) => {
+
     return (
         <Card className={cn("col-span-1 relative cursor-pointer", className)} {...props}>
             <div className="relative z-50 text-white">

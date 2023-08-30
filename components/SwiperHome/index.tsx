@@ -1,7 +1,7 @@
 "use client"
 import React from 'react';
 import {EffectFade, Autoplay} from 'swiper/modules';
-import {Swiper, SwiperSlide, useSwiper} from 'swiper/react';
+import {Swiper, SwiperSlide} from 'swiper/react';
 import { Activity } from '@prisma/client';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -13,6 +13,7 @@ interface Props  {
 }
 
 const SwiperHome: React.FC<Props> = ({populerActivities}) => {
+
     return (
         <div>
             <Swiper
@@ -28,7 +29,6 @@ const SwiperHome: React.FC<Props> = ({populerActivities}) => {
                 
                 {populerActivities.map(activity => (
                     <SwiperSlide className='relative' key={activity.id}>
-                    {/*<Image fill src={activity.imagesURL[0]} className="object-cover" alt=""/>*/}
                         <SwiperCard activity={activity}/>
                     </SwiperSlide>
                 ))}

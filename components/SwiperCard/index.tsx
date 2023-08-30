@@ -5,13 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { Activity } from "@prisma/client";
 import { Badge, badgeVariants } from "@/components/ui/badge";
-import {random} from "nanoid";
 
 interface Props {
     className?: React.ComponentProps<typeof Card>
     activity: Activity
 }
-const SwiperCard: React.FC<Props> = ({ className, activity }, ...props) => {
+const SwiperCard: React.FC<Props> = ({ className, activity, ...props }) => {
     return (
         <Card className={cn("relative cursor-pointer h-full", className)} {...props}>
             <div className="relative z-50 text-white h-full flex flex-col justify-between">
@@ -34,7 +33,7 @@ const SwiperCard: React.FC<Props> = ({ className, activity }, ...props) => {
                         <Badge>{activity.city}</Badge>
                         <Link href="/122333" className={badgeVariants({ variant: "default" })}>{activity.category}</Link>
                         {activity.price && <Badge>{activity.price} TL</Badge>}
-                        <Badge variant="secondary">{activity.startDate.toISOString().split("T")[0]} - {activity.endDate.toISOString().split("T")[0]}</Badge>
+                        <Badge variant="secondary">{activity.startDate.toISOString().split("T")} - {activity.endDate.toISOString().split("T")}</Badge>
                     </div>
                 </CardFooter>
             </div>
