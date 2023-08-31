@@ -1,20 +1,21 @@
 import prisma from "@/lib/prismadb"
 import {Separator} from "@/components/ui/separator";
-import SwiperPopoulerActivities from "../components/SwiperPopulerActivities";
+import SwiperPopulerActivities from "../components/SwiperPopulerActivities";
 import Filter from "../components/Filter";
 import Search from "../components/Search";
 import ActivityList from "../components/ActivityList";
+import getFilteredActivities from "@/actions/getFilteredActivities";
 
+const currentDate = new Date()
 
-export default async function Home() {
-    const currentDate = new Date();
-    //GET ALL ACTIVITIES
-    const activities = await prisma?.activity.findMany({
-        where: {
-            endDate: {
-                gte: currentDate
-            }
-        }
+export default async function Home({searchParams}: {searchParams : { category: string, city: string, place: string, start: dateFns, end: dateFns }}) {
+    const activities = await getFilteredActivities(searchParams.category, searchParams.city, searchParams.place, searchParams.start, searchParams.end )
+    const allActivities = await prisma.activity.findMany({
+       where: {
+           activityDate: {
+               gte: currentDate
+           }
+       }
     })
 
     //GET POPULER ACTIVITIES
@@ -42,14 +43,14 @@ export default async function Home() {
 
             <div className="space-y-5">
                 <h2 className="text-xl font-bold">Populer Activities</h2>
-                <SwiperPopoulerActivities populerActivities={populerActivities}/>
+                <SwiperPopulerActivities populerActivities={populerActivities}/>
             </div>
 
             <Separator/>
 
             <div className="space-y-5">
                 <h2 className="text-xl font-bold">Filter Activities</h2>
-                <Filter activities={activities}/>
+                <Filter activities={activities} allActivities={allActivities}/>
             </div>
 
             <Separator/>

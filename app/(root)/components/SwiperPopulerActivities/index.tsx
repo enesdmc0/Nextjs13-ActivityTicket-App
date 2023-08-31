@@ -60,9 +60,9 @@ const SwiperPopulerActivities: React.FC<Props> = ({populerActivities, className,
                                         <Badge>{activity.city}</Badge>
                                         <Link href="/122333"
                                               className={badgeVariants({variant: "default"})}>{activity.category}</Link>
-                                        {activity.price && <Badge>{activity.price} TL</Badge>}
+                                        {activity.price && <Badge>{activity.price[0]} TL</Badge>}
                                         <Badge
-                                            variant="secondary">{activity.startDate.toISOString().split("T")[0]} - {activity.endDate.toISOString().split("T")[0]}</Badge>
+                                            variant="secondary">{activity.activityDate.toISOString().split("T")[0]}}</Badge>
                                     </div>
                                 </CardFooter>
                             </div>

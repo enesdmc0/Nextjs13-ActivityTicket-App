@@ -10,7 +10,7 @@ const Outdated = async () => {
     //GET OUTDATED ACTIVITIES
     const activities = await prisma?.activity.findMany({
         where: {
-            endDate: {
+            activityDate: {
                 lt: currentDate
             }
         }

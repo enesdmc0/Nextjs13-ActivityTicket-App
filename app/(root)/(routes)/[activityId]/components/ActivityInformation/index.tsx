@@ -40,11 +40,7 @@ const ActivityInformation: React.FC<Props> = ({activity}) => {
             </div>}
             <div className="flex flex-col space-y-2">
                 <span className="font-bold text-md border-b">Start Date</span>
-                <span className="font-semibold text-sm text-gray-900">{activity.startDate.toISOString().split("T")[0]}</span>
-            </div>
-            <div className="flex flex-col space-y-2">
-                <span className="font-bold text-md border-b">End Date</span>
-                <span className="font-semibold text-sm text-gray-900">{activity.endDate.toISOString().split("T")[0]}</span>
+                <span className="font-semibold text-sm text-gray-900">{activity.activityDate.toISOString().split("T")[0]}</span>
             </div>
             <div className="col-span-2 flex flex-col space-y-2">
                 <span className="font-bold text-md border-b">Address</span>

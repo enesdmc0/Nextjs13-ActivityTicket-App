@@ -38,8 +38,8 @@ const CardComponent: React.FC<Props> = ({ className, activity, isOutdated, ...pr
                     <div className="ml-auto space-x-3 space-y-2">
                         <Badge>{activity.city}</Badge>
                         <Badge>{activity.category}</Badge>
-                        {activity.price && <Badge>{activity.price} TL</Badge>}
-                        <Badge variant="secondary">{activity.startDate.toISOString().split("T")[0]} - {activity.endDate.toISOString().split("T")[0]}</Badge>
+                        {activity.price && <Badge>{activity.price[0]} TL</Badge>}
+                        <Badge variant="secondary">{activity.activityDate.toISOString().split("T")[0]}</Badge>
                     </div>
                 </CardFooter>
             </div>
