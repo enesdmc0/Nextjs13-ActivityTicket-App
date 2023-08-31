@@ -33,6 +33,7 @@ import {
 import {Switch} from "@/components/ui/switch"
 import axios from "axios";
 import {useRouter} from "next/navigation";
+import toast from "react-hot-toast";
 
 
 const formSchema = z.object({
@@ -81,8 +82,9 @@ const ActivityForm = () => {
             await axios.post(`/api/activity`, data)
             router.refresh();
             router.push("/")
+            toast.success("Activity Created")
         } catch (error) {
-            console.log(error)
+            toast.error("Activity Error")
         } finally {
             setLoading(false)
         }
@@ -150,7 +152,7 @@ const ActivityForm = () => {
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent>
-                                                {categories.map(item =>(
+                                                {categories.map(item => (
                                                     <SelectItem key={item} value={item}>{item}</SelectItem>
                                                 ))}
                                             </SelectContent>
@@ -174,7 +176,7 @@ const ActivityForm = () => {
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent>
-                                                {cities.map(item =>(
+                                                {cities.map(item => (
                                                     <SelectItem key={item} value={item}>{item}</SelectItem>
                                                 ))}
                                             </SelectContent>
@@ -198,7 +200,7 @@ const ActivityForm = () => {
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent>
-                                                {places.map(item =>(
+                                                {places.map(item => (
                                                     <SelectItem key={item} value={item}>{item}</SelectItem>
                                                 ))}
                                             </SelectContent>
