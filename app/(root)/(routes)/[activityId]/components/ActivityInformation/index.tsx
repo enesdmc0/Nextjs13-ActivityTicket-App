@@ -1,7 +1,8 @@
 import React from 'react';
 import {Activity} from "@prisma/client";
 import Link from "next/link";
-import {ClipboardList} from "lucide-react";
+import {Armchair, ClipboardList} from "lucide-react";
+
 
 interface Props {
     activity: Activity
@@ -36,7 +37,11 @@ const ActivityInformation: React.FC<Props> = ({activity}) => {
             </div>
             {!activity.isFree && <div className="flex flex-col space-y-2">
                 <span className="font-bold text-md border-b">Price</span>
-                <span className="font-semibold text-sm text-gray-900">{activity.price}</span>
+                <span className="font-semibold text-sm text-gray-900">
+                    {activity.price.length === 1
+                        ? "Free"
+                        : `${activity.price[0]} TL (Category A) `
+                    }</span>
             </div>}
             <div className="flex flex-col space-y-2">
                 <span className="font-bold text-md border-b">Start Date</span>

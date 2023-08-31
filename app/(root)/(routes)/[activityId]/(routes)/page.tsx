@@ -53,7 +53,7 @@ const ActivityDetail = async ({params}: { params: { activityId: string } }) => {
 
             <div className="space-y-5">
                 <h2 className="text-xl font-bold">Armchair Layout</h2>
-                <ChairLayout/>
+                <ChairLayout activity={activity}/>
             </div>
 
             <Separator/>

@@ -2,9 +2,8 @@ import React from 'react';
 import { cn } from "@/lib/utils";
 import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Card } from "@/components/ui/card";
 import Image from "next/image";
-import Link from "next/link";
 import { Activity } from "@prisma/client";
-import { Badge, badgeVariants } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge";
 
 interface Props {
     className?: React.ComponentProps<typeof Card>
@@ -31,9 +30,9 @@ const SwiperCard: React.FC<Props> = ({ className, activity, ...props }) => {
                 <CardFooter>
                     <div className="ml-auto space-x-3 space-y-2">
                         <Badge>{activity.city}</Badge>
-                        <Link href="/122333" className={badgeVariants({ variant: "default" })}>{activity.category}</Link>
+                        <Badge>{activity.category}</Badge>
                         {activity.price && <Badge>{activity.price} TL</Badge>}
-                        <Badge variant="secondary">{activity.startDate.toISOString().split("T")} - {activity.endDate.toISOString().split("T")}</Badge>
+                        <Badge variant="secondary">{activity.activityDate.toISOString().split("T")[0]}</Badge>
                     </div>
                 </CardFooter>
             </div>

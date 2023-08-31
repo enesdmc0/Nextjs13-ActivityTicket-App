@@ -10,8 +10,7 @@ import 'swiper/css/pagination';
 import {cn} from "@/lib/utils";
 import {CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Card} from "@/components/ui/card";
 import Image from "next/image";
-import Link from "next/link";
-import {Badge, badgeVariants} from "@/components/ui/badge";
+import {Badge} from "@/components/ui/badge";
 
 
 interface Props {
@@ -58,11 +57,10 @@ const SwiperPopulerActivities: React.FC<Props> = ({populerActivities, className,
                                 <CardFooter>
                                     <div className="ml-auto space-x-3 space-y-2">
                                         <Badge>{activity.city}</Badge>
-                                        <Link href="/122333"
-                                              className={badgeVariants({variant: "default"})}>{activity.category}</Link>
-                                        {activity.price && <Badge>{activity.price[0]} TL</Badge>}
+                                        <Badge>{activity.category}</Badge>
+                                        {activity.price.length !== 1 && <Badge>{activity.price[0]} TL</Badge>}
                                         <Badge
-                                            variant="secondary">{activity.activityDate.toISOString().split("T")[0]}}</Badge>
+                                            variant="secondary">{activity.activityDate.toISOString().split("T")[0]}</Badge>
                                     </div>
                                 </CardFooter>
                             </div>

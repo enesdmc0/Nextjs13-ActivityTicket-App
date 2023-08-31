@@ -1,5 +1,7 @@
 import React from 'react';
 import {Armchair} from "lucide-react";
+import {Activity} from "@prisma/client";
+import {Badge} from "@/components/ui/badge";
 
 const data = [
     {
@@ -74,7 +76,11 @@ const data = [
     },
 ]
 
-const ChairLayout = () => {
+interface Props {
+    activity: Activity
+}
+
+const ChairLayout: React.FC<Props> = ({activity}) => {
 
     return (
         <div className="space-y-5 ">
@@ -93,36 +99,19 @@ const ChairLayout = () => {
                     ))}
                 </div>
                 <div className="col-span-1 border-l space-y-5 p-2">
-                    <div className="flex items-center space-x-1">
-                        <div
-                            className="font-bold text-xs border rounded-full flex items-center justify-center p-2 h-5 w-5">A
-                        </div>
-                        <div className="font-bold text-xs">100 TL</div>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                        <div
-                            className="font-bold text-xs border rounded-full flex items-center justify-center p-2 h-5 w-5">B
-                        </div>
-                        <div className="font-bold text-xs">200 TL</div>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                        <div
-                            className="font-bold text-xs border rounded-full flex items-center justify-center p-2 h-5 w-5">C
-                        </div>
-                        <div className="font-bold text-xs">300 TL</div>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                        <div
-                            className="font-bold text-xs border rounded-full flex items-center justify-center p-2 h-5 w-5">D
-                        </div>
-                        <div className="font-bold text-xs">400 TL</div>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                        <div
-                            className="font-bold text-xs border rounded-full flex items-center justify-center p-2 h-5 w-5">E
-                        </div>
-                        <div className="font-bold text-xs">500 TL</div>
-                    </div>
+                    {activity.price.length !== 1
+                        ? activity.price.map((price, index) => (
+                            <div key={index} className="flex items-center space-x-1">
+                                <div
+                                    className="font-bold text-xs border rounded-full flex items-center justify-center p-2 h-5 w-5">A
+                                </div>
+                                <div className="font-bold text-xs">{price} TL</div>
+                            </div>))
+                        : (<div className="flex items-center">
+                            <Badge>Free</Badge>
+                        </div>)
+                    }
+
                     <div className="flex items-center space-x-1">
                         <Armchair className={`w-8 h-8 `}/>
                         <div className="font-bold text-xs">Empty</div>
