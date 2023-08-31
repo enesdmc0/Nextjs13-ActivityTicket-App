@@ -12,6 +12,6 @@ export const filteredDatasAtom = atom( (get) => {
     const datas = get(datasAtom);
     const search = get(searchAtom);
     if (!search) return datas;
-    return datas.filter(data => data.title.toLowerCase().includes(search.toLowerCase()))
+    return datas.filter(data => data.organizers.toLowerCase().includes(search.toLowerCase()) || data.title.toLowerCase().includes(search.toLowerCase()))
 })
 

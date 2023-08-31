@@ -4,6 +4,7 @@ import {Input} from "@/components/ui/input";
 import {Activity} from "@prisma/client";
 import {useSetAtom, useAtom} from "jotai";
 import {datasAtom, searchAtom} from "@/atom";
+import {Button} from "@/components/ui/button";
 
 interface Props {
     activities: Activity[]
@@ -19,7 +20,10 @@ const Search: React.FC<Props> = ({activities}) => {
     }, [activities, setDatas])
 
     return (
-        <Input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search activity..." />
+        <div className="flex gap-5">
+            <Input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search activity..." />
+            <Button onClick={() => setSearch("")} variant="secondary" type="button">Reset</Button>
+        </div>
     );
 };
 
