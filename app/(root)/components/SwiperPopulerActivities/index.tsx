@@ -65,9 +65,15 @@ const SwiperPopulerActivities: React.FC<Props> = ({populerActivities, className,
                                 </CardFooter>
                             </div>
 
-                            <Image fill
-                                   src={activity.imagesURL[0]}
-                                   alt="Image" className="rounded-md object-cover opacity-80"/>
+                            {
+                                activity.imagesURL.map((image, index) => (
+                                    <Image
+                                        key={index}
+                                        fill
+                                        src={image}
+                                        alt="Image" className="rounded-md object-cover opacity-80"/>
+                                ))
+                            }
 
                         </Card>
 
