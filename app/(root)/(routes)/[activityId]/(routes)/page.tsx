@@ -9,6 +9,7 @@ import SwiperActivityDetail from "../components/SwiperActivityDetail";
 import Map from "../components/Map";
 import ActivityInformation from "../components/ActivityInformation";
 import ChairLayout from "../components/ChairLayout";
+import SocialMediaIcons from "@/app/(root)/(routes)/[activityId]/components/SocialMediaIcons";
 
 const ActivityDetail = async ({params}: { params: { activityId: string } }) => {
 
@@ -48,7 +49,8 @@ const ActivityDetail = async ({params}: { params: { activityId: string } }) => {
                 <Separator/>
                 <ActivityInformation activity={activity}/>
             </div>
-
+            <Separator/>
+            <SocialMediaIcons/>
             <Separator/>
 
             <div className="space-y-5">
