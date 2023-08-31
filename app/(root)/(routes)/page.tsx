@@ -57,14 +57,14 @@ export default async function Home({searchParams}: {searchParams : { category: s
 
             <div className="space-y-5">
                 <h2 className="text-xl font-bold">Search Activities</h2>
-                <Search/>
+                <Search activities={activities} />
             </div>
 
             <Separator/>
 
             <div className="space-y-5">
                 <h2 className="text-xl font-bold">Activities</h2>
-               <ActivityList activities={activities}/>
+               <ActivityList/>
             </div>
 
             <Separator/>
