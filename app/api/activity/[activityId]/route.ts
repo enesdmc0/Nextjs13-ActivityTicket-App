@@ -95,3 +95,25 @@ export async function DELETE(request: Request, {params}: {params: {activityId: s
         return new NextResponse("Internal Server error", {status: 500})
     }
 }
+
+//GET ACTIVITIY
+export async function GET(request: Request, {params}: {params: {activityId: string}}) {
+    try {
+
+        if (!params.activityId) {
+            return new NextResponse("Activity ID is required", {status: 403})
+        }
+
+        const activities = await prisma.activity.findMany({
+            where: {
+                id: params.activityId
+            }
+        })
+
+        return NextResponse.json(activities)
+
+    }catch (error) {
+        console.log("[GET_ACTIVITY_ERROR]", error)
+        return new NextResponse("Internal server error", {status: 500})
+    }
+}

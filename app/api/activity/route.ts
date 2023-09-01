@@ -2,7 +2,7 @@ import {NextResponse} from "next/server";
 import {auth} from "@clerk/nextjs";
 import prisma from "@/lib/prismadb";
 
-
+//CREATE ACTIVITY
 export async function POST(request: Request) {
     try {
         const {userId} = auth()
@@ -54,6 +54,21 @@ export async function POST(request: Request) {
 
     }catch (error) {
         console.log("[CREATE_ACTIVITY_ERROR]", error)
+        return new NextResponse("Internal server error", {status: 500})
+    }
+}
+
+
+//GET ALL ACTIVITIES
+export async function GET(request: Request) {
+    try {
+
+        const activities = await prisma.activity.findMany()
+
+        return NextResponse.json(activities)
+
+    }catch (error) {
+        console.log("[GET_ACTIVITY_ERROR]", error)
         return new NextResponse("Internal server error", {status: 500})
     }
 }
