@@ -1,17 +1,15 @@
 "use client"
 import React from 'react';
-import {EffectFade, Autoplay, Pagination} from 'swiper/modules';
+import {Autoplay, Pagination} from 'swiper/modules';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {Activity} from '@prisma/client';
 import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/effect-fade';
 import 'swiper/css/pagination';
 import {cn} from "@/lib/utils";
-import {CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Card} from "@/components/ui/card";
+import {CardDescription, CardFooter, CardHeader, CardTitle, Card} from "@/components/ui/card";
 import Image from "next/image";
 import {Badge} from "@/components/ui/badge";
-
+import {BadgeCheck, Calendar, MapPin, Pi, Wallet} from "lucide-react";
 
 interface Props {
     populerActivities: Activity[]
@@ -21,67 +19,83 @@ interface Props {
 const SwiperPopulerActivities: React.FC<Props> = ({populerActivities, className, ...props}) => {
 
     return (
-        <div>
-            <Swiper
-                spaceBetween={10}
-                modules={[Autoplay, EffectFade, Pagination]}
-                effect={'fade'}
-                className="h-[400px] rounded-md shadow-lg"
-                pagination={{
-                    type: 'progressbar',
-                }}
-                autoplay={{
-                    delay: 5000,
-                    disableOnInteraction: false,
-                }}
-            >
+        <Swiper
+            slidesPerView={3}
+            spaceBetween={30}
+            modules={[Autoplay, Pagination]}
+            className="h-[300px] rounded-md "
+            autoplay={{
+                delay: 5000,
+                disableOnInteraction: false,
+            }}
+        >
 
-                {populerActivities.map(activity => (
-                    <SwiperSlide className='relative' key={activity.id}>
-                        <Card className={cn("relative cursor-pointer h-full", className)} {...props}>
-                            <div className="relative z-50 text-white h-full flex flex-col justify-between">
-                                <CardHeader>
-                                    <CardTitle className="flex items-center">
+            {populerActivities.map(activity => (
+                <SwiperSlide className='relative ' key={activity.id}>
+                    <Card className={cn("relative aspect-square cursor-pointer h-full", className)} {...props}>
+                        <div className="relative z-50 text-white h-full flex flex-col justify-between">
+                            <CardHeader>
+                                <CardTitle className="flex items-center">
                                         <span className="ml-auto space-x-1">
-                                            {activity.isFree && <Badge variant="destructive">Free</Badge>}
-                                            {activity.isPopuler && <Badge variant="secondary">Populer</Badge>}
+                                            {activity.isFree &&
+                                                <Badge>
+                                                    <BadgeCheck className="w-4 h-4 mr-1"/>
+                                                    Free
+                                                </Badge>}
+                                            {activity.isPopuler &&
+                                                <Badge variant="secondary">
+                                                    <BadgeCheck className="w-4 h-4 mr-1"/>
+                                                    Populer
+                                                </Badge>}
                                         </span>
-                                    </CardTitle>
-                                    <CardDescription className="text-white text-xl font-semibold ">
-                                        <span className="bg-black rounded-md p-2">{activity.title}</span>
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent className="text-md  text-white font-bold">
-                                    <span className="bg-black rounded-md p-2">{activity.description}</span>
-                                </CardContent>
-                                <CardFooter>
-                                    <div className="ml-auto space-x-3 space-y-2">
-                                        <Badge>{activity.city}</Badge>
-                                        <Badge>{activity.category}</Badge>
-                                        {activity.price.length !== 1 && <Badge>{activity.price[0]} TL</Badge>}
-                                        <Badge
-                                            variant="secondary">{activity.activityDate.toISOString().split("T")[0]}</Badge>
-                                    </div>
-                                </CardFooter>
-                            </div>
+                                </CardTitle>
+                                <CardDescription className="text-xl font-semibold ">
+                                    <Badge variant="secondary">{activity.title}</Badge>
+                                </CardDescription>
+                            </CardHeader>
+                            <CardFooter>
+                                <div className="ml-auto space-x-3 space-y-2">
+                                    <Badge>
+                                        <MapPin className="w-4 h-4 mr-1"/>
+                                        <span className="capitalize">{activity.city}</span>
+                                    </Badge>
+                                    <Badge>
+                                        <MapPin className="w-4 h-4 mr-1"/>
+                                        <span className="capitalize">{activity.organizers}</span>
+                                    </Badge>
+                                    <Badge>
+                                        <Pi className="w-4 h-4 mr-1"/>
+                                        <span className="capitalize">{activity.category}</span>
+                                    </Badge>
+                                    {activity.price.length !== 1 && <Badge>
+                                        <Wallet className="w-4 h-4 mr-1"/>
+                                        <span>{activity.price[0]} TL</span>
+                                    </Badge>}
+                                    <Badge variant="secondary">
+                                        <Calendar className="w-4 h-4 mr-1"/>
+                                        <span
+                                            className="capitalize">{activity.activityDate.toISOString().split("T")[0]}</span>
+                                    </Badge>
+                                </div>
+                            </CardFooter>
+                        </div>
 
-                            {
-                                activity.imagesURL.map((image, index) => (
-                                    <Image
-                                        key={index}
-                                        fill
-                                        src={image}
-                                        alt="Image" className="rounded-md object-cover opacity-80"/>
-                                ))
-                            }
+                        {
+                            activity.imagesURL.map((image, index) => (
+                                <Image
+                                    key={index}
+                                    fill
+                                    src={image}
+                                    alt="Image" className="rounded-md object-cover overflow-hidden "/>
+                            ))
+                        }
 
-                        </Card>
+                    </Card>
 
-                    </SwiperSlide>
-                ))}
+                </SwiperSlide>
+            ))}
 
-            </Swiper>
-        </div>
+        </Swiper>
     );
 };
 

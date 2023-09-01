@@ -1,14 +1,17 @@
+import prisma from "@/lib/prismadb";
 import {NextResponse} from "next/server";
 import {auth} from "@clerk/nextjs";
-import prisma from "@/lib/prismadb";
 
-
-export async function POST(request: Request) {
+export async function PATCH(request: Request, {params}: {params: {activityId: string}}){
     try {
         const {userId} = auth()
 
         if (!userId) {
-            return new NextResponse("Unauthenticated", {status: 403})
+            return new NextResponse("Unauthorized", {status: 401})
+        }
+
+        if (!params.activityId) {
+            return new NextResponse("Activity ID is required", {status: 403})
         }
 
         const {
@@ -18,9 +21,9 @@ export async function POST(request: Request) {
             city,
             place,
             dob,
-            activityTime,
             organizers,
             imageUrl,
+            activityTime,
             latitude,
             longitude,
             address,
@@ -30,7 +33,10 @@ export async function POST(request: Request) {
         } = await request.json()
 
 
-        const activity = await prisma?.activity.create({
+        const activity = await prisma?.activity.updateMany({
+            where: {
+              id: params.activityId
+            },
             data: {
                 title,
                 description,
@@ -42,8 +48,8 @@ export async function POST(request: Request) {
                 isPopuler,
                 isFree,
                 imageUrl,
-                activityTime,
                 activityDate: dob,
+                activityTime,
                 latitude,
                 longitude,
                 price
@@ -53,7 +59,8 @@ export async function POST(request: Request) {
         return NextResponse.json(activity)
 
     }catch (error) {
-        console.log("[CREATE_ACTIVITY_ERROR]", error)
-        return new NextResponse("Internal server error", {status: 500})
+        console.log("[PATCH_ACTIVITY_ERROR]", error)
+        return new NextResponse("Internal Server error", {status: 500})
     }
+
 }

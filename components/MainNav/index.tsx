@@ -12,7 +12,7 @@ const MainNav = ({className, ...props}: React.HtmlHTMLAttributes<HTMLElement>) =
     const routes = [
         {href: "/", label: "Overview", active: pathname === "/"},
         {href: "/outdated", label: "Outdated Activities", active: pathname === "/outdated"},
-        {href: "/create", label: "Create Activity", active: pathname === "/create"},
+        {href: "/activity/new", label: "Create Activity", active: pathname === "/activity/new"},
     ]
 
 

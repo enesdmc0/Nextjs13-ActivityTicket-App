@@ -32,8 +32,10 @@ import {
 } from "@/components/ui/popover"
 import {Switch} from "@/components/ui/switch"
 import axios from "axios";
-import {useRouter} from "next/navigation";
+import {useParams, useRouter} from "next/navigation";
 import toast from "react-hot-toast";
+import ImageUpload from "@/components/ui/image-upload";
+import {Activity} from "@prisma/client";
 
 
 const formSchema = z.object({
@@ -43,46 +45,69 @@ const formSchema = z.object({
     city: z.string().min(2),
     place: z.string().min(2),
     dob: z.date(),
+    activtyTime: z.string(),
     organizers: z.string().min(2),
-    imagesUrl: z.string(),
+    imageUrl: z.string(),
     latitude: z.string(),
     longitude: z.string(),
     address: z.string().min(2),
     isPopuler: z.boolean(),
     isFree: z.boolean(),
-    price: z.string(),
+    price: z.number(),
 })
+
+interface Props {
+    initialData: Activity | null
+}
+
 type ActivityValues = z.infer<typeof formSchema>
-const ActivityForm = () => {
-    const [loading, setLoading] = useState(false)
+
+
+const ActivityForm: React.FC<Props> = ({initialData}) => {
     const router = useRouter()
+    const params = useParams()
+
+    const [loading, setLoading] = useState(false)
+    const [open, setOpen] = useState(false)
+
+
+    const title = initialData ? "Edit Activity" : "Create Activity";
+    const description = initialData ? "Edit a activity" : "Add a new activity";
+    const toastMessage = initialData ? "Activity updated" : "Activity created.";
+    const action = initialData ? "Save changes" : "Create activity";
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: {
+        defaultValues: initialData || {
             title: "",
             description: "",
             category: "",
             city: "",
             place: "",
             dob: undefined,
+            activtyTime: "",
             organizers: "",
-            imagesUrl: "",
+            imageUrl: "",
             latitude: "",
             longitude: "",
             address: "",
             isPopuler: false,
             isFree: false,
-            price: "",
+            price: 0,
         },
     })
 
     const onSubmit = async (data: ActivityValues) => {
         try {
             setLoading(true)
-            await axios.post(`/api/activity`, data)
+            if (initialData) {
+                await axios.patch(`/api/activity/${params.activityId}`, data)
+            } else {
+                await axios.post(`/api/activity`, data)
+            }
             router.refresh();
             router.push("/")
-            toast.success("Activity Created")
+            toast.success(toastMessage)
         } catch (error) {
             toast.error("Activity Error")
         } finally {
@@ -102,7 +127,9 @@ const ActivityForm = () => {
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                     <div className="grid grid-cols-4 gap-5">
 
+                        {/*TITLE*/}
                         <div className="col-span-2">
+
                             <FormField
                                 control={form.control}
                                 name="title"
@@ -117,6 +144,8 @@ const ActivityForm = () => {
                                 )}
                             />
                         </div>
+
+                        {/*DESCRIPTION*/}
                         <div className="col-span-2">
                             <FormField
                                 control={form.control}
@@ -137,7 +166,7 @@ const ActivityForm = () => {
                             />
                         </div>
 
-
+                        {/*CATEGORY*/}
                         <div className="col-span-1">
                             <FormField
                                 control={form.control}
@@ -162,6 +191,7 @@ const ActivityForm = () => {
                                 )}
                             />
                         </div>
+                        {/*CITY*/}
                         <div className="col-span-1">
                             <FormField
                                 control={form.control}
@@ -186,6 +216,7 @@ const ActivityForm = () => {
                                 )}
                             />
                         </div>
+                        {/*PLACE*/}
                         <div className="col-span-1">
                             <FormField
                                 control={form.control}
@@ -210,6 +241,7 @@ const ActivityForm = () => {
                                 )}
                             />
                         </div>
+                        {/*DATE*/}
                         <div className="col-span-1">
                             <FormField
                                 control={form.control}
@@ -254,26 +286,46 @@ const ActivityForm = () => {
                             />
                         </div>
 
-
+                        {/*ACTIVITY TIME*/}
                         <div className="col-span-2">
+
                             <FormField
                                 control={form.control}
-                                name="imagesUrl"
+                                name="activtyTime"
                                 render={({field}) => (
                                     <FormItem>
-                                        <FormLabel>Images Url</FormLabel>
+                                        <FormLabel>Time</FormLabel>
                                         <FormControl>
-                                            <Textarea
-                                                placeholder="Tell us a little bit about yourself"
-                                                className="resize-none"
-                                                {...field}
-                                            />
+                                            <Input placeholder="Time" type="time" {...field} />
                                         </FormControl>
                                         <FormMessage/>
                                     </FormItem>
                                 )}
                             />
                         </div>
+
+
+                        {/*IMAGE*/}
+                        <div className="col-span-2">
+                            <FormField control={form.control}
+                                       name="imageUrl"
+                                       render={({field}) => (
+                                           <FormItem>
+                                               <FormLabel>Background Image</FormLabel>
+                                               <FormControl>
+                                                   <ImageUpload
+                                                       value={field.value ? [field.value] : []}
+                                                       disabled={loading}
+                                                       onChange={(url) => field.onChange(url)}
+                                                       onRemove={() => field.onChange("")}
+                                                   />
+                                               </FormControl>
+                                               <FormMessage/>
+                                           </FormItem>
+                                       )}
+                            />
+                        </div>
+                        {/*ADDRESS*/}
                         <div className="col-span-2">
                             <FormField
                                 control={form.control}
@@ -294,7 +346,7 @@ const ActivityForm = () => {
                             />
                         </div>
 
-
+                        {/*ORGANIZERS*/}
                         <div className="col-span-1">
                             <FormField
                                 control={form.control}
@@ -310,6 +362,7 @@ const ActivityForm = () => {
                                 )}
                             />
                         </div>
+                        {/*LATITUDE*/}
                         <div className="col-span-1">
                             <FormField
                                 control={form.control}
@@ -325,6 +378,7 @@ const ActivityForm = () => {
                                 )}
                             />
                         </div>
+                        {/*LONGITUDE*/}
                         <div className="col-span-1">
                             <FormField
                                 control={form.control}
@@ -340,6 +394,7 @@ const ActivityForm = () => {
                                 )}
                             />
                         </div>
+                        {/*IS POPULER*/}
                         <div className="col-span-1 mt-2">
                             <FormField
                                 control={form.control}
@@ -360,7 +415,7 @@ const ActivityForm = () => {
                                 )}
                             />
                         </div>
-
+                        {/*IS FREE*/}
                         <div className="col-span-1 mt-2">
                             <FormField
                                 control={form.control}
@@ -379,6 +434,7 @@ const ActivityForm = () => {
                                 )}
                             />
                         </div>
+                        {/*PRICE*/}
                         <div className="col-span-1">
                             <FormField
                                 control={form.control}
@@ -395,9 +451,10 @@ const ActivityForm = () => {
                             />
                         </div>
 
+
                         <div className="col-span-2 grid grid-cols-2 gap-5 items-end">
-                            <Button className="col-span-1" disabled={loading} type="submit">Submit</Button>
-                            <Button className="col-span-1" variant="outline" type="button">Cancel</Button>
+                            <Button className="col-span-1" disabled={loading} type="submit">{action}</Button>
+                            <Button className="col-span-1" variant="outline" onClick={() => {router.push("/")}} type="button">Cancel</Button>
                         </div>
                     </div>
                 </form>

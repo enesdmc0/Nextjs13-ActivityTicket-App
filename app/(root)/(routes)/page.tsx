@@ -5,6 +5,7 @@ import Filter from "../components/Filter";
 import Search from "../components/Search";
 import ActivityList from "../components/ActivityList";
 import getFilteredActivities from "@/actions/getFilteredActivities";
+import ClientOnly from "@/components/ClientOnly";
 
 const currentDate = new Date()
 
@@ -43,7 +44,9 @@ export default async function Home({searchParams}: {searchParams : { category: s
 
             <div className="space-y-5">
                 <h2 className="text-xl font-bold">Populer Activities</h2>
-                <SwiperPopulerActivities populerActivities={populerActivities}/>
+                <ClientOnly>
+                    <SwiperPopulerActivities populerActivities={populerActivities}/>
+                </ClientOnly>
             </div>
 
             <Separator/>

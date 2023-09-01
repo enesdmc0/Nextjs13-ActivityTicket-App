@@ -1,11 +1,12 @@
-"use client"
 import React from 'react';
-import { cn } from "@/lib/utils";
-import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Card } from "@/components/ui/card";
+import {cn} from "@/lib/utils";
+import {CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Card} from "@/components/ui/card";
+import {Activity} from "@prisma/client";
+import {Badge} from "@/components/ui/badge";
+import {BadgeCheck, Calendar, ChevronRight, Landmark, MapPin, Pi, Wallet} from "lucide-react";
+import {Button} from "@/components/ui/button";
+import Link from "next/link";
 import Image from "next/image";
-import { Activity } from "@prisma/client";
-import { Badge } from "@/components/ui/badge";
-import {useRouter} from "next/navigation";
 
 interface Props {
     className?: React.ComponentProps<typeof Card>
@@ -14,42 +15,77 @@ interface Props {
 }
 
 
-const CardComponent: React.FC<Props> = ({ className, activity, isOutdated, ...props }) => {
-    const router = useRouter()
+const CardComponent: React.FC<Props> = ({className, activity, isOutdated, ...props}) => {
 
     return (
-        <Card onClick={() => router.push(`/${activity.id}`)} className={cn("col-span-1 relative cursor-pointer", className)} {...props}>
-            <div className="relative z-40 text-white">
+        <Card
+            className={cn("col-span-1 relative cursor-pointer bg-secondary rounded-md aspect-square overflow-hidden", className)} {...props}>
+            <div className="relative z-40 h-full flex flex-col justify-between">
                 <CardHeader>
                     <CardTitle className="flex items-center">
                         <span className="ml-auto space-x-1">
-                            {activity.isFree && <Badge variant="destructive">Free</Badge>}
-                            {activity.isPopuler && <Badge>Populer</Badge>}
+                            {activity.isFree &&
+                                <Badge>
+                                    <BadgeCheck className="w-4 h-4 mr-1"/>
+                                    Free
+                                </Badge>
+                            }
+                            {activity.isPopuler &&
+                                <Badge>
+                                    <BadgeCheck className="w-4 h-4 mr-1"/>
+                                    Populer
+                                </Badge>
+                            }
                         </span>
                     </CardTitle>
-                    <CardDescription className="text-white text-xl font-semibold">
+                    <CardDescription className="text-xl font-semibold">
                         {activity.title}
                     </CardDescription>
+
                 </CardHeader>
-                <CardContent className="text-sm font-bold">
-                    {activity.description}
-                </CardContent>
+
                 <CardFooter>
-                    <div className="ml-auto space-x-3 space-y-2">
-                        <Badge>{activity.city}</Badge>
-                        <Badge>{activity.category}</Badge>
-                        <Badge>{activity.organizers}</Badge>
-                        {activity.price.length !== 1 && <Badge>{activity.price[0]} TL</Badge>}
-                        <Badge variant="secondary">{activity.activityDate.toISOString().split("T")[0]}</Badge>
+                    <div className="ml-auto space-x-3 space-y-2 relative">
+                        <Badge>
+                            <MapPin className="w-4 h-4 mr-1"/>
+                            <span className="capitalize">{activity.city}</span>
+                        </Badge>
+                        <Badge>
+                            <Pi className="w-4 h-4 mr-1"/>
+                            <span className="capitalize">{activity.category}</span>
+                        </Badge>
+                        <Badge>
+                            <Landmark className="w-4 h-4 mr-1"/>
+                            <span className="capitalize">{activity.organizers}</span>
+                        </Badge>
+
+                        {activity.price.length !== 1 &&
+                            <Badge>
+                                <Wallet className="w-4 h-4 mr-1"/>
+                                <span>{activity.price[0]} TL</span>
+                            </Badge>
+                        }
+
+                        <Badge variant="secondary">
+                            <Calendar className="w-4 h-4 mr-1"/>
+                            <span className="capitalize">{activity.activityDate.toISOString().split("T")[0]}</span>
+                        </Badge>
+
+                        <Button variant="outline" asChild className="absolute right-0 bottom-0">
+                            <Link href={`/${activity.id}`}>
+                                <ChevronRight className="h-4 w-4"/>
+                            </Link>
+                        </Button>
+
                     </div>
+
                 </CardFooter>
             </div>
 
-            <Image fill
-                src="https://plus.unsplash.com/premium_photo-1669997804173-1cf7003d0664?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8&auto=format&fit=crop&w=500&q=60"
-                alt="Image" className="rounded-md object-cover opacity-90" />
-            {isOutdated && <div className="absolute top-0 left-0 p-3 bg-black rounded-md h-full w-full z-50 opacity-30 hover:opacity-80 text-red-600 font-bold">OUTDATED</div>}
-                
+            <Image src={activity.imagesURL[0]} alt="" fill />
+            {isOutdated && <div
+                className="absolute top-0 left-0 p-3 bg-black rounded-md h-full w-full z-50 opacity-30 hover:opacity-80 text-red-600 font-bold">OUTDATED</div>}
+
         </Card>
     );
 };

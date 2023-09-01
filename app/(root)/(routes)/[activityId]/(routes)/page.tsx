@@ -10,6 +10,7 @@ import Map from "../components/Map";
 import ActivityInformation from "../components/ActivityInformation";
 import ChairLayout from "../components/ChairLayout";
 import SocialMediaIcons from "@/app/(root)/(routes)/[activityId]/components/SocialMediaIcons";
+import ClientOnly from "@/components/ClientOnly";
 
 const ActivityDetail = async ({params}: { params: { activityId: string } }) => {
 
@@ -39,7 +40,9 @@ const ActivityDetail = async ({params}: { params: { activityId: string } }) => {
                         {activity.isPopuler && <Badge>Populer</Badge>}
                     </div>
                 </div>
-                <SwiperActivityDetail activity={activity}/>
+                <ClientOnly>
+                    <SwiperActivityDetail activity={activity}/>
+                </ClientOnly>
             </div>
 
             <Separator/>
