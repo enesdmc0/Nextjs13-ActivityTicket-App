@@ -5,6 +5,7 @@ import {ClerkProvider} from '@clerk/nextjs'
 import React from "react";
 import AtomProvider from "@/providers/AtomProvider";
 import ToastProvider from "@/providers/ToastProvider";
+import {ThemeProvider} from "@/providers/ThemeProvider";
 
 const inter = Inter({subsets: ['latin']})
 
@@ -22,10 +23,15 @@ export default function RootLayout({
         <ClerkProvider>
             <html lang="en">
             <body className={inter.className}>
-            <ToastProvider/>
-            <AtomProvider>
-                {children}
-            </AtomProvider>
+            <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem>
+                <ToastProvider/>
+                <AtomProvider>
+                    {children}
+                </AtomProvider>
+            </ThemeProvider>
             </body>
             </html>
         </ClerkProvider>

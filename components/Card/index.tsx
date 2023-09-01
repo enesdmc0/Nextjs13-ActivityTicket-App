@@ -73,7 +73,7 @@ const CardComponent: React.FC<Props> = ({className, activity, isOutdated, ...pro
                             </Badge>
                         </div>
 
-                        <Button variant="outline" asChild className="col-span-1 ">
+                        <Button variant="secondary" asChild className="col-span-1 ">
                             <Link href={`/${activity.id}`}>
                                 <ChevronRight className="h-4 w-4"/>
                             </Link>
