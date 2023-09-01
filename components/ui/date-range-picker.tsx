@@ -53,7 +53,6 @@ export function DatePickerWithRange({className,}: React.HTMLAttributes<HTMLDivEl
                         mode="range"
                         defaultMonth={date?.from}
                         selected={date}
-                        onSelect={setDate}
                         numberOfMonths={2}
                     />
                 </PopoverContent>
