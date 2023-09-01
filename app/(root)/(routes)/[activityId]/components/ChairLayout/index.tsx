@@ -83,6 +83,8 @@ interface Props {
 
 const ChairLayout: React.FC<Props> = ({activity}) => {
 
+    const prices = [100, 200, 300, 400, 500]
+
     return (
         <div className="space-y-5 ">
             <div className="grid grid-cols-11 border-4 rounded-md p-5 gap-y-10">
@@ -100,8 +102,8 @@ const ChairLayout: React.FC<Props> = ({activity}) => {
                     ))}
                 </div>
                 <div className="col-span-1 border-l space-y-5 p-2">
-                    {activity.price.length !== 1
-                        ? activity.price.map((price, index) => (
+                    {activity.price !== 0
+                        ? prices.map((price, index) => (
                             <div key={index} className="flex items-center space-x-1">
                                 <div
                                     className="font-bold text-xs border rounded-full flex items-center justify-center p-2 h-5 w-5">A

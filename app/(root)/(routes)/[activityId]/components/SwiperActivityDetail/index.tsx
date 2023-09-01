@@ -27,12 +27,16 @@ const SwiperActivityDetail: React.FC<Props> = ({activity}) => {
                 }}
             >
                 
-                {activity.imagesURL.map((image, index) => (
-                    <SwiperSlide className='relative' key={index}>
-                    <Image fill src={image} className="object-cover aspect-square rounded-md" alt=""/>
-                    </SwiperSlide>
-                ))}
-            
+                {/*{activity.imagesURL.map((image, index) => (*/}
+                {/*    <SwiperSlide className='relative' key={index}>*/}
+                {/*    <Image fill src={image} className="object-cover aspect-square rounded-md" alt=""/>*/}
+                {/*    </SwiperSlide>*/}
+                {/*))}*/}
+
+                <SwiperSlide className='relative'>
+                    <Image fill src={activity.imageUrl} className="object-cover aspect-square rounded-md" alt=""/>
+                </SwiperSlide>
+
             </Swiper>
 
         </div>

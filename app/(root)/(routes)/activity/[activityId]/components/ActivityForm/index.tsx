@@ -45,7 +45,7 @@ const formSchema = z.object({
     city: z.string().min(2),
     place: z.string().min(2),
     dob: z.date(),
-    activtyTime: z.string(),
+    activityTime: z.string(),
     organizers: z.string().min(2),
     imageUrl: z.string(),
     latitude: z.string(),
@@ -53,7 +53,7 @@ const formSchema = z.object({
     address: z.string().min(2),
     isPopuler: z.boolean(),
     isFree: z.boolean(),
-    price: z.number(),
+    price: z.coerce.number(),
 })
 
 interface Props {
@@ -85,7 +85,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
             city: "",
             place: "",
             dob: undefined,
-            activtyTime: "",
+            activityTime: "",
             organizers: "",
             imageUrl: "",
             latitude: "",
@@ -97,6 +97,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
         },
     })
 
+
     const onSubmit = async (data: ActivityValues) => {
         try {
             setLoading(true)
@@ -106,7 +107,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                 await axios.post(`/api/activity`, data)
             }
             router.refresh();
-            router.push("/")
+            router.push(`/${params.activityId}`)
             toast.success(toastMessage)
         } catch (error) {
             toast.error("Activity Error")
@@ -174,10 +175,10 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                                 render={({field}) => (
                                     <FormItem>
                                         <FormLabel>Category</FormLabel>
-                                        <Select onValueChange={field.onChange}>
+                                        <Select disabled={loading} onValueChange={field.onChange} defaultValue={field.value} value={field.value}>
                                             <FormControl>
                                                 <SelectTrigger>
-                                                    <SelectValue placeholder="Select a Category"/>
+                                                    <SelectValue defaultValue={field.value}  placeholder="Select a Category"/>
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent>
@@ -199,10 +200,10 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                                 render={({field}) => (
                                     <FormItem>
                                         <FormLabel>City</FormLabel>
-                                        <Select onValueChange={field.onChange}>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value} value={field.value}>
                                             <FormControl>
                                                 <SelectTrigger>
-                                                    <SelectValue placeholder="Select a City"/>
+                                                    <SelectValue defaultValue={field.value} placeholder="Select a City"/>
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent>
@@ -224,10 +225,10 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                                 render={({field}) => (
                                     <FormItem>
                                         <FormLabel>Place</FormLabel>
-                                        <Select onValueChange={field.onChange}>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value} value={field.value}>
                                             <FormControl>
                                                 <SelectTrigger>
-                                                    <SelectValue placeholder="Select a Place"/>
+                                                    <SelectValue defaultValue={field.value} placeholder="Select a Place"/>
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent>
@@ -273,9 +274,6 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                                                     mode="single"
                                                     selected={field.value}
                                                     onSelect={field.onChange}
-                                                    // disabled={(date) =>
-                                                    //     date < new Date()
-                                                    // }
                                                     initialFocus
                                                 />
                                             </PopoverContent>
@@ -291,12 +289,12 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
 
                             <FormField
                                 control={form.control}
-                                name="activtyTime"
+                                name="activityTime"
                                 render={({field}) => (
                                     <FormItem>
                                         <FormLabel>Time</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="Time" type="time" {...field} />
+                                            <Input placeholder="Time" {...field} />
                                         </FormControl>
                                         <FormMessage/>
                                     </FormItem>
@@ -443,7 +441,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                                     <FormItem>
                                         <FormLabel>Price</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="Price" disabled={isFreeWatch} {...field} />
+                                            <Input placeholder="Price" type="number" disabled={isFreeWatch} {...field} />
                                         </FormControl>
                                         <FormMessage/>
                                     </FormItem>
@@ -454,7 +452,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
 
                         <div className="col-span-2 grid grid-cols-2 gap-5 items-end">
                             <Button className="col-span-1" disabled={loading} type="submit">{action}</Button>
-                            <Button className="col-span-1" variant="outline" onClick={() => {router.push("/")}} type="button">Cancel</Button>
+                            <Button className="col-span-1" variant="outline" onClick={() => {router.back()}} type="button">Cancel</Button>
                         </div>
                     </div>
                 </form>

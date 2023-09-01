@@ -1,5 +1,4 @@
 import prisma from "@/lib/prismadb";
-import {NextResponse} from "next/server";
 
 
 export default async function getFilteredActivities(category: string, city: string, place: string, startDate: any, endDate: any) {

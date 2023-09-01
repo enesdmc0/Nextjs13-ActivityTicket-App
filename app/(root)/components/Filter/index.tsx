@@ -26,7 +26,7 @@ interface Props {
 const formSchema = z.object({
     category: z.string(),
     city: z.string(),
-    place: z.string()
+    place: z.string(),
 })
 type FilterValues = z.infer<typeof formSchema>
 
@@ -56,15 +56,23 @@ const Filter: React.FC<Props> = ({activities, allActivities}) => {
 
 
     const onSubmit = (data: FilterValues) => {
-        const startDate = date?.from?.toISOString().split("T")[0]
-        const endDate = date?.to?.toISOString().split("T")[0]
+        const startDate = date?.from?.toDateString()
+        const endDate = date?.to?.toDateString()
         router.push(`/?category=${data.category}&city=${data.city}&place=${data.place}&start=${startDate}&end=${endDate}`, {scroll: false})
     }
 
+    const today = new Date()
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1)
+    const dateRange = {
+        from: today,
+        to: tomorrow,
+    };
+
     const handleReset = () => {
         router.push("/", {scroll: false})
-        setDate(undefined)
-        form.reset({category: undefined, city: undefined, place: undefined})
+        setDate(dateRange)
+        router.refresh()
     }
 
     return (
@@ -80,7 +88,7 @@ const Filter: React.FC<Props> = ({activities, allActivities}) => {
                             name="category"
                             render={({field}) => (
                                 <FormItem>
-                                    <Select onValueChange={field.onChange}>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value} value={field.value}>
                                         <FormControl>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Category"/>
@@ -94,7 +102,6 @@ const Filter: React.FC<Props> = ({activities, allActivities}) => {
                                             ))}
                                         </SelectContent>
                                     </Select>
-
                                     <FormMessage/>
                                 </FormItem>
                             )}
@@ -105,7 +112,7 @@ const Filter: React.FC<Props> = ({activities, allActivities}) => {
                             name="city"
                             render={({field}) => (
                                 <FormItem>
-                                    <Select onValueChange={field.onChange}>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value} value={field.value}>
                                         <FormControl>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="City"/>
@@ -130,7 +137,7 @@ const Filter: React.FC<Props> = ({activities, allActivities}) => {
                             name="place"
                             render={({field}) => (
                                 <FormItem>
-                                    <Select onValueChange={field.onChange}>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value} value={field.value}>
                                         <FormControl>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Place"/>

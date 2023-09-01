@@ -67,28 +67,33 @@ const SwiperPopulerActivities: React.FC<Props> = ({populerActivities, className,
                                         <Pi className="w-4 h-4 mr-1"/>
                                         <span className="capitalize">{activity.category}</span>
                                     </Badge>
-                                    {activity.price.length !== 1 && <Badge>
+                                    {activity.price !== 0 && <Badge>
                                         <Wallet className="w-4 h-4 mr-1"/>
-                                        <span>{activity.price[0]} TL</span>
+                                        <span>{activity.price} TL</span>
                                     </Badge>}
                                     <Badge variant="secondary">
                                         <Calendar className="w-4 h-4 mr-1"/>
                                         <span
-                                            className="capitalize">{activity.activityDate.toISOString().split("T")[0]}</span>
+                                            className="capitalize">{activity.activityDate.toDateString()}</span>
                                     </Badge>
                                 </div>
                             </CardFooter>
                         </div>
 
-                        {
-                            activity.imagesURL.map((image, index) => (
-                                <Image
-                                    key={index}
-                                    fill
-                                    src={image}
-                                    alt="Image" className="rounded-md object-cover overflow-hidden "/>
-                            ))
-                        }
+                        {/*{*/}
+                        {/*    activity.imagesURL.map((image, index) => (*/}
+                        {/*        <Image*/}
+                        {/*            key={index}*/}
+                        {/*            fill*/}
+                        {/*            src={image}*/}
+                        {/*            alt="Image" className="rounded-md object-cover overflow-hidden "/>*/}
+                        {/*    ))*/}
+                        {/*}*/}
+
+                        <Image
+                        fill
+                        src={activity.imageUrl}
+                        alt="Image" className="rounded-md object-cover overflow-hidden "/>
 
                     </Card>
 

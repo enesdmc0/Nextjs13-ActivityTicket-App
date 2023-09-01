@@ -2,8 +2,17 @@ import {atom} from "jotai";
 import {DateRange} from "react-day-picker";
 import {Activity} from "@prisma/client";
 
+const today = new Date()
+const tomorrow = new Date(today);
 
-export const dateAtom = atom<DateRange | undefined>(undefined)
+tomorrow.setDate(today.getDate() + 1)
+
+
+const dateRange = {
+    from: today,
+    to: tomorrow,
+};
+export const dateAtom = atom<DateRange>(dateRange)
 
 export const searchAtom = atom<string>("");
 export const datasAtom = atom<Activity[]>([])

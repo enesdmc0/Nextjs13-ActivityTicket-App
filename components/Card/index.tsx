@@ -1,6 +1,6 @@
 import React from 'react';
 import {cn} from "@/lib/utils";
-import {CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Card} from "@/components/ui/card";
+import {CardDescription, CardFooter, CardHeader, CardTitle, Card} from "@/components/ui/card";
 import {Activity} from "@prisma/client";
 import {Badge} from "@/components/ui/badge";
 import {BadgeCheck, Calendar, ChevronRight, Landmark, MapPin, Pi, Wallet} from "lucide-react";
@@ -59,16 +59,16 @@ const CardComponent: React.FC<Props> = ({className, activity, isOutdated, ...pro
                             <span className="capitalize">{activity.organizers}</span>
                         </Badge>
 
-                        {activity.price.length !== 1 &&
+                        {activity.price !== 0 &&
                             <Badge>
                                 <Wallet className="w-4 h-4 mr-1"/>
-                                <span>{activity.price[0]} TL</span>
+                                <span>{activity.price} TL</span>
                             </Badge>
                         }
 
                         <Badge variant="secondary">
                             <Calendar className="w-4 h-4 mr-1"/>
-                            <span className="capitalize">{activity.activityDate.toISOString().split("T")[0]}</span>
+                            <span className="capitalize">{activity.activityDate.toDateString()}</span>
                         </Badge>
 
                         <Button variant="outline" asChild className="absolute right-0 bottom-0">
@@ -82,7 +82,7 @@ const CardComponent: React.FC<Props> = ({className, activity, isOutdated, ...pro
                 </CardFooter>
             </div>
 
-            <Image src={activity.imagesURL[0]} alt="" fill />
+            <Image src={activity.imageUrl} alt="" fill />
             {isOutdated && <div
                 className="absolute top-0 left-0 p-3 bg-black rounded-md h-full w-full z-50 opacity-30 hover:opacity-80 text-red-600 font-bold">OUTDATED</div>}
 

@@ -11,6 +11,7 @@ import ActivityInformation from "../components/ActivityInformation";
 import ChairLayout from "../components/ChairLayout";
 import SocialMediaIcons from "@/app/(root)/(routes)/[activityId]/components/SocialMediaIcons";
 import ClientOnly from "@/components/ClientOnly";
+import DeleteEditButtons from "@/app/(root)/(routes)/[activityId]/components/DeleteEditButtons";
 
 const ActivityDetail = async ({params}: { params: { activityId: string } }) => {
 
@@ -31,6 +32,9 @@ const ActivityDetail = async ({params}: { params: { activityId: string } }) => {
 
     return (
         <div className="mt-10 space-y-10 w-3/4 mx-auto">
+
+            <DeleteEditButtons/>
+            <Separator/>
 
             <div className="space-y-5">
                 <div className="flex items-center justify-between">
@@ -65,7 +69,9 @@ const ActivityDetail = async ({params}: { params: { activityId: string } }) => {
 
             <div className="space-y-5">
                 <h2 className="text-xl font-bold">Activity Map</h2>
-                <Map/>
+                <ClientOnly>
+                    <Map/>
+                </ClientOnly>
             </div>
 
             <Separator/>
