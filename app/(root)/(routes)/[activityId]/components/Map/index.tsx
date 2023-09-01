@@ -15,15 +15,21 @@ L.Icon.Default.mergeOptions({
     shadowUrl: markerShadow.src
 });
 
-const Map = () => {
+interface Props {
+    latitude: string
+    longitude: string
+}
+
+const Map: React.FC<Props> = ({latitude, longitude}) => {
+
 
     return (
-           <MapContainer className="h-[400px]" center={[39.925533, 32.866287]} zoom={13} scrollWheelZoom={false}>
+           <MapContainer className="h-[400px]" center={[parseFloat(latitude), parseFloat(longitude)]} zoom={13} scrollWheelZoom={false}>
                <TileLayer
                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                />
-               <Marker  position={[39.925533, 32.866287]}>
+               <Marker  position={[parseFloat(latitude), parseFloat(longitude)]}>
                    <Popup>
                        Activity Address
                    </Popup>

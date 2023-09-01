@@ -9,7 +9,7 @@ import {cn} from "@/lib/utils";
 import {CardDescription, CardFooter, CardHeader, CardTitle, Card} from "@/components/ui/card";
 import Image from "next/image";
 import {Badge} from "@/components/ui/badge";
-import {BadgeCheck, Calendar, MapPin, Pi, Wallet} from "lucide-react";
+import {BadgeCheck, Calendar, MapPin, Pi, UserCircle2, Wallet} from "lucide-react";
 
 interface Props {
     populerActivities: Activity[]
@@ -60,7 +60,7 @@ const SwiperPopulerActivities: React.FC<Props> = ({populerActivities, className,
                                         <span className="capitalize">{activity.city}</span>
                                     </Badge>
                                     <Badge>
-                                        <MapPin className="w-4 h-4 mr-1"/>
+                                        <UserCircle2 className="w-4 h-4 mr-1"/>
                                         <span className="capitalize">{activity.organizers}</span>
                                     </Badge>
                                     <Badge>

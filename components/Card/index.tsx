@@ -3,7 +3,7 @@ import {cn} from "@/lib/utils";
 import {CardDescription, CardFooter, CardHeader, CardTitle, Card} from "@/components/ui/card";
 import {Activity} from "@prisma/client";
 import {Badge} from "@/components/ui/badge";
-import {BadgeCheck, Calendar, ChevronRight, Landmark, MapPin, Pi, Wallet} from "lucide-react";
+import {BadgeCheck, Calendar, ChevronRight, Coins, MapPin, Pi, UserCircle2, Wallet} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
@@ -26,7 +26,7 @@ const CardComponent: React.FC<Props> = ({className, activity, isOutdated, ...pro
                         <span className="ml-auto space-x-1">
                             {activity.isFree &&
                                 <Badge>
-                                    <BadgeCheck className="w-4 h-4 mr-1"/>
+                                    <Coins className="w-4 h-4 mr-1"/>
                                     Free
                                 </Badge>
                             }
@@ -45,38 +45,39 @@ const CardComponent: React.FC<Props> = ({className, activity, isOutdated, ...pro
                 </CardHeader>
 
                 <CardFooter>
-                    <div className="ml-auto space-x-3 space-y-2 relative">
-                        <Badge>
-                            <MapPin className="w-4 h-4 mr-1"/>
-                            <span className="capitalize">{activity.city}</span>
-                        </Badge>
-                        <Badge>
-                            <Pi className="w-4 h-4 mr-1"/>
-                            <span className="capitalize">{activity.category}</span>
-                        </Badge>
-                        <Badge>
-                            <Landmark className="w-4 h-4 mr-1"/>
-                            <span className="capitalize">{activity.organizers}</span>
-                        </Badge>
-
-                        {activity.price !== 0 &&
+                    <div className="ml-auto  items-end  grid grid-cols-5">
+                        <div className="col-span-4 space-y-2 space-x-3">
                             <Badge>
-                                <Wallet className="w-4 h-4 mr-1"/>
-                                <span>{activity.price} TL</span>
+                                <MapPin className="w-4 h-4 mr-1"/>
+                                <span className="capitalize">{activity.city}</span>
                             </Badge>
-                        }
+                            <Badge>
+                                <Pi className="w-4 h-4 mr-1"/>
+                                <span className="capitalize">{activity.category}</span>
+                            </Badge>
+                            <Badge>
+                                <UserCircle2 className="w-4 h-4 mr-1"/>
+                                <span className="capitalize">{activity.organizers}</span>
+                            </Badge>
 
-                        <Badge variant="secondary">
-                            <Calendar className="w-4 h-4 mr-1"/>
-                            <span className="capitalize">{activity.activityDate.toDateString()}</span>
-                        </Badge>
+                            {activity.price !== 0 &&
+                                <Badge>
+                                    <Wallet className="w-4 h-4 mr-1"/>
+                                    <span>{activity.price} TL</span>
+                                </Badge>
+                            }
 
-                        <Button variant="outline" asChild className="absolute right-0 bottom-0">
+                            <Badge variant="secondary">
+                                <Calendar className="w-4 h-4 mr-1"/>
+                                <span className="capitalize">{activity.activityDate.toDateString()}</span>
+                            </Badge>
+                        </div>
+
+                        <Button variant="outline" asChild className="col-span-1 ">
                             <Link href={`/${activity.id}`}>
                                 <ChevronRight className="h-4 w-4"/>
                             </Link>
                         </Button>
-
                     </div>
 
                 </CardFooter>

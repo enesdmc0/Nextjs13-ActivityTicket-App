@@ -103,11 +103,12 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
             setLoading(true)
             if (initialData) {
                 await axios.patch(`/api/activity/${params.activityId}`, data)
+                router.push(`/${params.activityId}`)
             } else {
-                await axios.post(`/api/activity`, data)
+                const res = await axios.post(`/api/activity`, data)
+                router.push(`/${res.data.id}`)
             }
             router.refresh();
-            router.push(`/${params.activityId}`)
             toast.success(toastMessage)
         } catch (error) {
             toast.error("Activity Error")

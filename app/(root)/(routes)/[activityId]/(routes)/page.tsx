@@ -12,6 +12,7 @@ import ChairLayout from "../components/ChairLayout";
 import SocialMediaIcons from "@/app/(root)/(routes)/[activityId]/components/SocialMediaIcons";
 import ClientOnly from "@/components/ClientOnly";
 import DeleteEditButtons from "@/app/(root)/(routes)/[activityId]/components/DeleteEditButtons";
+import {BadgeCheck, Coins} from "lucide-react";
 
 const ActivityDetail = async ({params}: { params: { activityId: string } }) => {
 
@@ -32,16 +33,24 @@ const ActivityDetail = async ({params}: { params: { activityId: string } }) => {
 
     return (
         <div className="mt-10 space-y-10 w-3/4 mx-auto">
-
-            <DeleteEditButtons/>
+            <div className="flex items-center justify-between">
+                <h2 className="text-xl font-bold">Activity Detail</h2>
+                <DeleteEditButtons/>
+            </div>
             <Separator/>
 
             <div className="space-y-5">
                 <div className="flex items-center justify-between">
                     <h2 className="text-xl font-bold">{activity.title}</h2>
                     <div className="space-x-5">
-                        {activity.isFree && <Badge>Free</Badge>}
-                        {activity.isPopuler && <Badge>Populer</Badge>}
+                        {activity.isFree && <Badge>
+                            <Coins className="w-4 h-4 mr-1"/>
+                            Free
+                        </Badge>}
+                        {activity.isPopuler && <Badge>
+                            <BadgeCheck className="w-4 h-4 mr-1"/>
+                            Populer
+                        </Badge>}
                     </div>
                 </div>
                 <ClientOnly>
@@ -57,7 +66,9 @@ const ActivityDetail = async ({params}: { params: { activityId: string } }) => {
                 <ActivityInformation activity={activity}/>
             </div>
             <Separator/>
+
             <SocialMediaIcons/>
+
             <Separator/>
 
             <div className="space-y-5">
@@ -70,7 +81,7 @@ const ActivityDetail = async ({params}: { params: { activityId: string } }) => {
             <div className="space-y-5">
                 <h2 className="text-xl font-bold">Activity Map</h2>
                 <ClientOnly>
-                    <Map/>
+                    <Map latitude={activity.latitude} longitude={activity.longitude} />
                 </ClientOnly>
             </div>
 
