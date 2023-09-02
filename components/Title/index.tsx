@@ -7,10 +7,10 @@ interface Props {
 
 const Title: React.FC<Props> = ({title, description}) => {
     return (
-        <>
+        <div>
             <h2 className="text-xl font-bold">{title}</h2>
             <p className="text-xs font-semibold">{description}</p>
-        </>
+        </div>
     );
 };
 

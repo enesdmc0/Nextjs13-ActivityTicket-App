@@ -23,6 +23,10 @@ export default async function getFilteredActivities(category: string, city: stri
                 }
             })
 
+            if (!activities) {
+                return null
+            }
+
             return activities
 
         }

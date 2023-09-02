@@ -3,8 +3,8 @@ import React from 'react';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {Button} from "@/components/ui/button";
 import {Activity} from "@prisma/client";
-import { format } from "date-fns"
-import { cn } from "@/lib/utils"
+import {format} from "date-fns"
+import {cn} from "@/lib/utils"
 import {
     Form,
     FormControl,
@@ -38,6 +38,7 @@ const formSchema = z.object({
 type FilterValues = z.infer<typeof formSchema>
 
 const Filter: React.FC<Props> = ({activities, allActivities}, className: React.HTMLAttributes<HTMLDivElement>) => {
+
     const router = useRouter()
     const today = new Date()
     const tomorrow = new Date(today);
@@ -55,6 +56,7 @@ const Filter: React.FC<Props> = ({activities, allActivities}, className: React.H
             datePicker: dateRange
         }
     })
+
 
     let categories: any = [];
     let cities: any = [];
@@ -74,7 +76,6 @@ const Filter: React.FC<Props> = ({activities, allActivities}, className: React.H
     }
 
 
-
     const handleReset = () => {
         router.push("/", {scroll: false})
         form.reset({
@@ -92,56 +93,56 @@ const Filter: React.FC<Props> = ({activities, allActivities}, className: React.H
                 <form onSubmit={form.handleSubmit(onSubmit)}>
                     <div className="grid grid-cols-6 gap-4">
 
-                       <div className="col-span-2">
-                           <FormField
-                               control={form.control}
-                               name="datePicker"
-                               render={({field}) => (
-                                   <FormItem>
-                                       <div className={cn("grid gap-2", className)}>
-                                           <Popover>
-                                               <PopoverTrigger asChild>
-                                                   <FormControl>
-                                                       <Button
-                                                           id="date"
-                                                           variant={"outline"}
-                                                           className={cn(
-                                                               "w-[300px] justify-start text-left font-normal",
-                                                               !field.value && "text-muted-foreground"
-                                                           )}
-                                                       >
-                                                           <CalendarIcon className="mr-2 h-4 w-4" />
-                                                           {field.value?.from ? (
-                                                               field.value.to ? (
-                                                                   <>
-                                                                       {format(field.value.from, "LLL dd, y")} -{" "}
-                                                                       {format(field.value.to, "LLL dd, y")}
-                                                                   </>
-                                                               ) : (
-                                                                   format(field.value.from, "LLL dd, y")
-                                                               )
-                                                           ) : (
-                                                               <span>Pick a date</span>
-                                                           )}
-                                                       </Button>
-                                                   </FormControl>
-                                               </PopoverTrigger>
-                                               <PopoverContent className="w-auto p-0" align="start">
-                                                   <Calendar
-                                                       initialFocus
-                                                       mode="range"
-                                                       selected={field.value}
-                                                       onSelect={field.onChange}
-                                                       numberOfMonths={2}
-                                                   />
-                                               </PopoverContent>
-                                           </Popover>
-                                       </div>
-                                       <FormMessage/>
-                                   </FormItem>
-                               )}
-                           />
-                       </div>
+                        <div className="col-span-2">
+                            <FormField
+                                control={form.control}
+                                name="datePicker"
+                                render={({field}) => (
+                                    <FormItem>
+                                        <div className={cn("grid gap-2", className)}>
+                                            <Popover>
+                                                <PopoverTrigger asChild>
+                                                    <FormControl>
+                                                        <Button
+                                                            id="date"
+                                                            variant={"outline"}
+                                                            className={cn(
+                                                                "w-[300px] justify-start text-left font-normal",
+                                                                !field.value && "text-muted-foreground"
+                                                            )}
+                                                        >
+                                                            <CalendarIcon className="mr-2 h-4 w-4"/>
+                                                            {field.value?.from ? (
+                                                                field.value.to ? (
+                                                                    <>
+                                                                        {format(field.value.from, "LLL dd, y")} -{" "}
+                                                                        {format(field.value.to, "LLL dd, y")}
+                                                                    </>
+                                                                ) : (
+                                                                    format(field.value.from, "LLL dd, y")
+                                                                )
+                                                            ) : (
+                                                                <span>Pick a date</span>
+                                                            )}
+                                                        </Button>
+                                                    </FormControl>
+                                                </PopoverTrigger>
+                                                <PopoverContent className="w-auto p-0" align="start">
+                                                    <Calendar
+                                                        initialFocus
+                                                        mode="range"
+                                                        selected={field.value}
+                                                        onSelect={field.onChange}
+                                                        numberOfMonths={2}
+                                                    />
+                                                </PopoverContent>
+                                            </Popover>
+                                        </div>
+                                        <FormMessage/>
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
 
 
                         <div className="col-span-1">
@@ -150,7 +151,8 @@ const Filter: React.FC<Props> = ({activities, allActivities}, className: React.H
                                 name="category"
                                 render={({field}) => (
                                     <FormItem>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value} value={field.value}>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}
+                                                value={field.value}>
                                             <FormControl>
                                                 <SelectTrigger>
                                                     <SelectValue defaultValue={field.value} placeholder="Category"/>
@@ -176,7 +178,8 @@ const Filter: React.FC<Props> = ({activities, allActivities}, className: React.H
                                 name="city"
                                 render={({field}) => (
                                     <FormItem>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value} value={field.value}>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}
+                                                value={field.value}>
                                             <FormControl>
                                                 <SelectTrigger>
                                                     <SelectValue placeholder="City"/>
@@ -203,7 +206,8 @@ const Filter: React.FC<Props> = ({activities, allActivities}, className: React.H
                                 name="place"
                                 render={({field}) => (
                                     <FormItem>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value} value={field.value}>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}
+                                                value={field.value}>
                                             <FormControl>
                                                 <SelectTrigger>
                                                     <SelectValue placeholder="Place"/>
@@ -223,10 +227,10 @@ const Filter: React.FC<Props> = ({activities, allActivities}, className: React.H
                                 )}
                             />
                         </div>
-                       <div className="space-x-2">
-                           <Button onClick={handleReset} variant="secondary" type="reset">Reset</Button>
-                           <Button type="submit">Filter</Button>
-                       </div>
+                        <div className="space-x-2">
+                            <Button onClick={handleReset} variant="secondary" type="reset">Reset</Button>
+                            <Button type="submit">Filter</Button>
+                        </div>
                     </div>
                 </form>
             </Form>

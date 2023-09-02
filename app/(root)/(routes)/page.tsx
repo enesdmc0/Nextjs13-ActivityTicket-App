@@ -1,22 +1,32 @@
 import prisma from "@/lib/prismadb"
 import {Separator} from "@/components/ui/separator";
-import SwiperPopulerActivities from "../components/SwiperPopulerActivities";
-import Filter from "../components/Filter";
-import Search from "../components/Search";
-import ActivityList from "../components/ActivityList";
+import SwiperPopulerActivities from "@/app/(root)/components/SwiperPopulerActivities";
+import Filter from "@/app/(root)/components/Filter";
+import Search from "@/app/(root)/components/Search";
+import ActivityList from "@/app/(root)/components/ActivityList";
 import getFilteredActivities from "@/actions/getFilteredActivities";
 import ClientOnly from "@/components/ClientOnly";
+import {redirect} from "next/navigation";
+import Title from "@/components/Title";
 
 const currentDate = new Date()
 
-export default async function Home({searchParams}: {searchParams : { category: string, city: string, place: string, start: dateFns, end: dateFns }}) {
-    const activities = await getFilteredActivities(searchParams.category, searchParams.city, searchParams.place, searchParams.start, searchParams.end )
+export default async function Home({searchParams}: { searchParams: { category: string, city: string, place: string, start: dateFns, end: dateFns } }) {
+
+    //GET FILTERED ACTIVITIES
+    const activities = await getFilteredActivities(searchParams.category, searchParams.city, searchParams.place, searchParams.start, searchParams.end)
+
+    if (activities === null || activities === undefined) {
+        redirect("/")
+    }
+
+    //GET ALL ACTIVITIES
     const allActivities = await prisma.activity.findMany({
-       where: {
-           activityDate: {
-               gte: currentDate
-           }
-       }
+        where: {
+            activityDate: {
+                gte: currentDate
+            }
+        }
     })
 
     //GET POPULER ACTIVITIES
@@ -27,23 +37,11 @@ export default async function Home({searchParams}: {searchParams : { category: s
     })
 
 
-    if (!activities) {
-        return (
-            <div>Aradığınız aktivite bulunamadı</div>
-        )
-    }
-
-    if (!populerActivities) {
-        return (
-            <div>Populer aktivite bulunamadı</div>
-        )
-    }
-
     return (
         <div className="mt-10 space-y-10 w-3/4 mx-auto">
 
             <div className="space-y-5">
-                <h2 className="text-xl font-bold">Populer Activities</h2>
+                <Title title="Populer Activities"/>
                 <ClientOnly>
                     <SwiperPopulerActivities populerActivities={populerActivities}/>
                 </ClientOnly>
@@ -52,22 +50,22 @@ export default async function Home({searchParams}: {searchParams : { category: s
             <Separator/>
 
             <div className="space-y-5">
-                <h2 className="text-xl font-bold">Filter Activities</h2>
+                <Title title="Activities Filter"/>
                 <Filter activities={activities} allActivities={allActivities}/>
             </div>
 
             <Separator/>
 
             <div className="space-y-5">
-                <h2 className="text-xl font-bold">Search Activities</h2>
-                <Search activities={activities} />
+                <Title title="Search Activities"/>
+                <Search activities={activities}/>
             </div>
 
             <Separator/>
 
             <div className="space-y-5">
-                <h2 className="text-xl font-bold">Activities</h2>
-               <ActivityList/>
+                <Title title="Activities"/>
+                <ActivityList/>
             </div>
 
             <Separator/>
