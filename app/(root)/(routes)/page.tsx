@@ -38,7 +38,7 @@ export default async function Home({searchParams}: { searchParams: { category: s
 
 
     return (
-        <div className="mt-10 space-y-10 w-3/4 mx-auto">
+        <div className="mt-10 space-y-10 w-full xl:w-3/4 px-5 xl:mx-auto">
 
             <div className="space-y-5">
                 <Title title="Populer Activities"/>

@@ -129,7 +129,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                     <div className="grid grid-cols-4 gap-5">
 
                         {/*TITLE (2) */}
-                        <div className="col-span-2">
+                        <div className=" col-span-4 sm:col-span-2">
 
                             <FormField
                                 control={form.control}
@@ -147,7 +147,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                         </div>
 
                         {/*DESCRIPTION (2)*/}
-                        <div className="col-span-2">
+                        <div className=" col-span-4 sm:col-span-2">
                             <FormField
                                 control={form.control}
                                 name="description"
@@ -168,7 +168,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                         </div>
 
                         {/*CATEGORY (1) */}
-                        <div className="col-span-1">
+                        <div className=" col-span-2 sm:col-span-1">
                             <FormField
                                 control={form.control}
                                 name="category"
@@ -193,7 +193,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                             />
                         </div>
                         {/*CITY (1)*/}
-                        <div className="col-span-1">
+                        <div className="col-span-2 sm:col-span-1">
                             <FormField
                                 control={form.control}
                                 name="city"
@@ -219,7 +219,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                         </div>
 
                         {/*PLACE (1)*/}
-                        <div className="col-span-1">
+                        <div className="col-span-2 sm:col-span-1">
                             <FormField
                                 control={form.control}
                                 name="place"
@@ -243,8 +243,26 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                                 )}
                             />
                         </div>
+
+                        {/*ACTIVITY TIME (1) */}
+                        <div className="col-span-2 sm:col-span-1">
+
+                            <FormField
+                                control={form.control}
+                                name="activityTime"
+                                render={({field}) => (
+                                    <FormItem>
+                                        <FormLabel>Time</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="Time" {...field} />
+                                        </FormControl>
+                                        <FormMessage/>
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
                         {/*DATE (1) */}
-                        <div className="col-span-1">
+                        <div className="col-span-2 sm:col-span-1">
                             <FormField
                                 control={form.control}
                                 name="dob"
@@ -257,7 +275,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                                                     <Button
                                                         variant={"outline"}
                                                         className={cn(
-                                                            "w-[240px] pl-3 text-left font-normal",
+                                                            "w-full pl-3 text-left font-normal",
                                                             !field.value && "text-muted-foreground"
                                                         )}
                                                     >
@@ -284,48 +302,24 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                                 )}
                             />
                         </div>
-
-                        {/*ACTIVITY TIME (1) */}
-                        <div className="col-span-1">
-
+                        {/*ORGANIZERS (1) */}
+                        <div className="col-span-2 sm:col-span-1">
                             <FormField
                                 control={form.control}
-                                name="activityTime"
+                                name="organizers"
                                 render={({field}) => (
                                     <FormItem>
-                                        <FormLabel>Time</FormLabel>
+                                        <FormLabel>Organizers</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="Time" {...field} />
+                                            <Input placeholder="Organizers" {...field} />
                                         </FormControl>
                                         <FormMessage/>
                                     </FormItem>
                                 )}
                             />
                         </div>
-
-
-                        {/*IMAGE (1) */}
-                        <div className="col-span-1">
-                            <FormField control={form.control}
-                                       name="imageUrl"
-                                       render={({field}) => (
-                                           <FormItem>
-                                               <FormLabel>Background Image</FormLabel>
-                                               <FormControl>
-                                                   <ImageUpload
-                                                       value={field.value ? [field.value] : []}
-                                                       disabled={loading}
-                                                       onChange={(url) => field.onChange(url)}
-                                                       onRemove={() => field.onChange("")}
-                                                   />
-                                               </FormControl>
-                                               <FormMessage/>
-                                           </FormItem>
-                                       )}
-                            />
-                        </div>
                         {/*ADDRESS (2) */}
-                        <div className="col-span-2">
+                        <div className="col-span-4 sm:col-span-2">
                             <FormField
                                 control={form.control}
                                 name="address"
@@ -345,8 +339,30 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                             />
                         </div>
 
+                        {/*IMAGE (1) */}
+                        <div className="col-span-2 sm:col-span-1">
+                            <FormField control={form.control}
+                                       name="imageUrl"
+                                       render={({field}) => (
+                                           <FormItem>
+                                               <FormLabel>Background Image</FormLabel>
+                                               <FormControl>
+                                                   <ImageUpload
+                                                       value={field.value ? [field.value] : []}
+                                                       disabled={loading}
+                                                       onChange={(url) => field.onChange(url)}
+                                                       onRemove={() => field.onChange("")}
+                                                   />
+                                               </FormControl>
+                                               <FormMessage/>
+                                           </FormItem>
+                                       )}
+                            />
+                        </div>
+
+
                         {/*ORGANIZERS (1) */}
-                        <div className="col-span-1">
+                        <div className="col-span-2 sm:col-span-1">
                             <FormField
                                 control={form.control}
                                 name="organizers"
@@ -363,7 +379,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                         </div>
 
                         {/*IS POPULER (1) */}
-                        <div className="col-span-1 mt-2">
+                        <div className="col-span-2 sm:col-span-1 mt-2">
                             <FormField
                                 control={form.control}
                                 name="isPopuler"
@@ -384,7 +400,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                             />
                         </div>
                         {/*IS FREE (1) */}
-                        <div className="col-span-1 mt-2">
+                        <div className="col-span-2 sm:col-span-1 mt-2">
                             <FormField
                                 control={form.control}
                                 name="isFree"
@@ -403,7 +419,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                             />
                         </div>
                         {/*PRICE (1) */}
-                        <div className="col-span-1">
+                        <div className="col-span-2 sm:col-span-1">
                             <FormField
                                 control={form.control}
                                 name="price"

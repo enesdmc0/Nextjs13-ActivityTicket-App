@@ -21,10 +21,10 @@ const MainNav = ({className, ...props}: React.HtmlHTMLAttributes<HTMLElement>) =
     return (
         <div className={cn("flex items-center space-x-4 lg:space-x-6", className)} {...props}>
             {routes.map((route) => (
-                <Link href={route.href} key={route.href} className={cn("text-sm flex items-center gap-1 font-medium transition-colors hover:text-primary",
+                <Link href={route.href} key={route.href} className={cn("sm:text-sm flex items-center gap-1 font-medium transition-colors hover:text-primary",
                 route.active ? "text-black dark:text-white" : "text-muted-foreground")}>
-                    {route.Icon}
-                    <span>{route.label}</span>
+                    <span className="hidden md:inline">{route.Icon}</span>
+                    <span className="text-xs">{route.label}</span>
                 </Link>
             ))}
         </div>

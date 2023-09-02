@@ -33,7 +33,7 @@ const ActivityDetail = async ({params}: { params: { activityId: string } }) => {
     }
 
     return (
-        <div className="mt-10 space-y-10 w-3/4 mx-auto">
+        <div className="mt-10 space-y-10 w-full xl:w-3/4 px-5 xl:mx-auto">
 
             <div className="flex items-center justify-between">
                 <Title title="Activity Detail" description="The time of the activity, the address, the price and more information." />

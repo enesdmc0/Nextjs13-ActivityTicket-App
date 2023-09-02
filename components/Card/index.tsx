@@ -19,7 +19,7 @@ const CardComponent: React.FC<Props> = ({className, activity, isOutdated, ...pro
 
     return (
         <Card
-            className={cn("col-span-1 relative cursor-pointer bg-secondary rounded-md aspect-square overflow-hidden", className)} {...props}>
+            className={cn("col-span-6 md:col-span-3 xl:col-span-2 relative cursor-pointer bg-secondary rounded-md aspect-square overflow-hidden", className)} {...props}>
             <div className="relative z-40 h-full flex flex-col justify-between">
                 <CardHeader>
                     <CardTitle className="flex items-center">

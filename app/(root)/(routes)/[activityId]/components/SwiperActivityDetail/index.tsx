@@ -17,7 +17,15 @@ const SwiperActivityDetail: React.FC<Props> = ({activity}) => {
     return (
         <div>
             <Swiper
-                slidesPerView={3}
+                breakpoints={{
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    920: {
+                        slidesPerView: 3,
+                    },
+                }}
+                slidesPerView={1}
                 spaceBetween={30}
                 modules={[Autoplay, Pagination]}
                 className="h-[300px] rounded-md "

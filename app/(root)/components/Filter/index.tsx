@@ -93,7 +93,7 @@ const Filter: React.FC<Props> = ({activities, allActivities}, className: React.H
                 <form onSubmit={form.handleSubmit(onSubmit)}>
                     <div className="grid grid-cols-6 gap-4">
 
-                        <div className="col-span-2">
+                        <div className="col-span-6 sm:col-span-4 xl:col-span-2">
                             <FormField
                                 control={form.control}
                                 name="datePicker"
@@ -107,7 +107,7 @@ const Filter: React.FC<Props> = ({activities, allActivities}, className: React.H
                                                             id="date"
                                                             variant={"outline"}
                                                             className={cn(
-                                                                "w-[300px] justify-start text-left font-normal",
+                                                                "w-full justify-start text-left font-normal",
                                                                 !field.value && "text-muted-foreground"
                                                             )}
                                                         >
@@ -145,7 +145,7 @@ const Filter: React.FC<Props> = ({activities, allActivities}, className: React.H
                         </div>
 
 
-                        <div className="col-span-1">
+                        <div className="col-span-3  sm:col-span-2 xl:col-span-1">
                             <FormField
                                 control={form.control}
                                 name="category"
@@ -172,7 +172,7 @@ const Filter: React.FC<Props> = ({activities, allActivities}, className: React.H
                             />
                         </div>
 
-                        <div className="col-span-1">
+                        <div className="col-span-3 sm:col-span-2 xl:col-span-1">
                             <FormField
                                 control={form.control}
                                 name="city"
@@ -200,7 +200,7 @@ const Filter: React.FC<Props> = ({activities, allActivities}, className: React.H
                             />
                         </div>
 
-                        <div className="col-span-1">
+                        <div className="col-span-3 sm:col-span-2 md:col-span-1">
                             <FormField
                                 control={form.control}
                                 name="place"
@@ -227,7 +227,7 @@ const Filter: React.FC<Props> = ({activities, allActivities}, className: React.H
                                 )}
                             />
                         </div>
-                        <div className="space-x-2">
+                        <div className="col-span-3 sm:col-span-2 flex w-full gap-2 md:col-span-1">
                             <Button onClick={handleReset} variant="secondary" type="reset">Reset</Button>
                             <Button type="submit">Filter</Button>
                         </div>
