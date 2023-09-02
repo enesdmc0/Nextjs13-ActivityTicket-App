@@ -36,6 +36,8 @@ import {useParams, useRouter} from "next/navigation";
 import toast from "react-hot-toast";
 import ImageUpload from "@/components/ui/image-upload";
 import {Activity} from "@prisma/client";
+import {Separator} from "@/components/ui/separator";
+import Title from "@/components/Title";
 
 
 const formSchema = z.object({
@@ -48,8 +50,6 @@ const formSchema = z.object({
     activityTime: z.string(),
     organizers: z.string().min(2),
     imageUrl: z.string(),
-    latitude: z.string(),
-    longitude: z.string(),
     address: z.string().min(2),
     isPopuler: z.boolean(),
     isFree: z.boolean(),
@@ -68,7 +68,6 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
     const params = useParams()
 
     const [loading, setLoading] = useState(false)
-    const [open, setOpen] = useState(false)
 
 
     const title = initialData ? "Edit Activity" : "Create Activity";
@@ -88,8 +87,6 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
             activityTime: "",
             organizers: "",
             imageUrl: "",
-            latitude: "",
-            longitude: "",
             address: "",
             isPopuler: false,
             isFree: false,
@@ -119,17 +116,19 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
 
     const isFreeWatch = form.watch("isFree")
 
-    const categories = ["festval", "piknik", "şenlik"]
-    const cities = ["ankara", "istanbul", "izmir"]
-    const places = ["bahçe", "park", "orman"]
+    const categories = [ "sport", "art", "music", "cinema", "fashion" ]
+    const cities = [ "istanbul", "paris", "roma", "tokyo", "new york" ]
+    const places = [ "stadium", "hall", "showroom", "nature", "beach" ]
 
     return (
-        <div className="">
+        <div className="space-y-5">
+           <Title title={title} description={description}/>
+            <Separator/>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                     <div className="grid grid-cols-4 gap-5">
 
-                        {/*TITLE*/}
+                        {/*TITLE (2) */}
                         <div className="col-span-2">
 
                             <FormField
@@ -147,7 +146,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                             />
                         </div>
 
-                        {/*DESCRIPTION*/}
+                        {/*DESCRIPTION (2)*/}
                         <div className="col-span-2">
                             <FormField
                                 control={form.control}
@@ -168,7 +167,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                             />
                         </div>
 
-                        {/*CATEGORY*/}
+                        {/*CATEGORY (1) */}
                         <div className="col-span-1">
                             <FormField
                                 control={form.control}
@@ -193,7 +192,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                                 )}
                             />
                         </div>
-                        {/*CITY*/}
+                        {/*CITY (1)*/}
                         <div className="col-span-1">
                             <FormField
                                 control={form.control}
@@ -218,7 +217,8 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                                 )}
                             />
                         </div>
-                        {/*PLACE*/}
+
+                        {/*PLACE (1)*/}
                         <div className="col-span-1">
                             <FormField
                                 control={form.control}
@@ -243,7 +243,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                                 )}
                             />
                         </div>
-                        {/*DATE*/}
+                        {/*DATE (1) */}
                         <div className="col-span-1">
                             <FormField
                                 control={form.control}
@@ -285,8 +285,8 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                             />
                         </div>
 
-                        {/*ACTIVITY TIME*/}
-                        <div className="col-span-2">
+                        {/*ACTIVITY TIME (1) */}
+                        <div className="col-span-1">
 
                             <FormField
                                 control={form.control}
@@ -304,8 +304,8 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                         </div>
 
 
-                        {/*IMAGE*/}
-                        <div className="col-span-2">
+                        {/*IMAGE (1) */}
+                        <div className="col-span-1">
                             <FormField control={form.control}
                                        name="imageUrl"
                                        render={({field}) => (
@@ -324,7 +324,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                                        )}
                             />
                         </div>
-                        {/*ADDRESS*/}
+                        {/*ADDRESS (2) */}
                         <div className="col-span-2">
                             <FormField
                                 control={form.control}
@@ -345,7 +345,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                             />
                         </div>
 
-                        {/*ORGANIZERS*/}
+                        {/*ORGANIZERS (1) */}
                         <div className="col-span-1">
                             <FormField
                                 control={form.control}
@@ -361,39 +361,8 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                                 )}
                             />
                         </div>
-                        {/*LATITUDE*/}
-                        <div className="col-span-1">
-                            <FormField
-                                control={form.control}
-                                name="latitude"
-                                render={({field}) => (
-                                    <FormItem>
-                                        <FormLabel>Latitude</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Latitude" {...field} />
-                                        </FormControl>
-                                        <FormMessage/>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                        {/*LONGITUDE*/}
-                        <div className="col-span-1">
-                            <FormField
-                                control={form.control}
-                                name="longitude"
-                                render={({field}) => (
-                                    <FormItem>
-                                        <FormLabel>Longitude</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Longitude" {...field} />
-                                        </FormControl>
-                                        <FormMessage/>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                        {/*IS POPULER*/}
+
+                        {/*IS POPULER (1) */}
                         <div className="col-span-1 mt-2">
                             <FormField
                                 control={form.control}
@@ -414,7 +383,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                                 )}
                             />
                         </div>
-                        {/*IS FREE*/}
+                        {/*IS FREE (1) */}
                         <div className="col-span-1 mt-2">
                             <FormField
                                 control={form.control}
@@ -433,7 +402,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                                 )}
                             />
                         </div>
-                        {/*PRICE*/}
+                        {/*PRICE (1) */}
                         <div className="col-span-1">
                             <FormField
                                 control={form.control}
@@ -453,7 +422,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
 
                         <div className="col-span-2 grid grid-cols-2 gap-5 items-end">
                             <Button className="col-span-1" disabled={loading} type="submit">{action}</Button>
-                            <Button className="col-span-1" variant="outline" onClick={() => {router.back()}} type="button">Cancel</Button>
+                            <Button className="col-span-1" variant="secondary" onClick={() => {router.back()}} type="button">Cancel</Button>
                         </div>
                     </div>
                 </form>

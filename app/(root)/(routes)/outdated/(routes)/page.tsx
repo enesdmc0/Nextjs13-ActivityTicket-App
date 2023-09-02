@@ -2,6 +2,8 @@ import React from 'react'
 import {Separator} from "@/components/ui/separator";
 import Card from "@/components/Card"
 import prisma from "@/lib/prismadb"
+import ActivityNotFound from "@/components/ActivityNotFound";
+import Title from "@/components/Title";
 
 
 const Outdated = async () => {
@@ -16,23 +18,23 @@ const Outdated = async () => {
         }
     })
 
-    if (!activities) {
-        return (
-            <div>Aradığınız aktivite bulunamadı</div>
-        )
-    }
+
     return (
         <div className="mt-10 space-y-10 w-3/4 mx-auto">
             <div className="space-y-5">
-                <h2 className="text-xl font-bold">Outdated Activities</h2>
-              <Separator/>
+                <Title title="Outdated Activities"
+                       description={`${currentDate.toDateString()} Activities before`}/>
+                <Separator/>
+                {activities.length === 0
+                    ? (<ActivityNotFound description="No overdue activity found."/>)
+                    : (<div className="grid grid-cols-3 gap-5">
+                        {activities.map(activity => (
+                            <Card key={activity.id} activity={activity} isOutdated/>
+                        ))}
+                    </div>)
+                }
 
-                <div className="grid grid-cols-3 gap-5">
-                    {activities.map(activity => (
-                        <Card key={activity.id} activity={activity} isOutdated/>
-                    ))}
 
-                </div>
             </div>
             <Separator/>
         </div>

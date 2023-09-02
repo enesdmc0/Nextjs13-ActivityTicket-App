@@ -38,8 +38,8 @@ const CardComponent: React.FC<Props> = ({className, activity, isOutdated, ...pro
                             }
                         </span>
                     </CardTitle>
-                    <CardDescription className="text-xl font-semibold">
-                        {activity.title}
+                    <CardDescription>
+                       <span className="bg-secondary text-md text-secondary-foreground font-semibold rounded-md p-1">{activity.title}</span>
                     </CardDescription>
 
                 </CardHeader>

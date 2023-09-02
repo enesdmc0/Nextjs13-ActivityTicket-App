@@ -19,8 +19,7 @@ const SettingsActivity = async ({params}: { params: { activityId: string } }) =>
         <div className="mt-10 space-y-10 w-3/4 mx-auto">
 
             <div className="space-y-5">
-                <h2 className="text-xl font-bold">Create Activity</h2>
-                <Separator/>
+
                 <ActivityForm initialData={activity}/>
             </div>
             <Separator/>
