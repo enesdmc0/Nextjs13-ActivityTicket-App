@@ -24,7 +24,7 @@ const Map: React.FC<Props> = ({latitude, longitude}) => {
 
 
     return (
-           <MapContainer className="h-[400px]" center={[parseFloat(latitude), parseFloat(longitude)]} zoom={13} scrollWheelZoom={false}>
+           <MapContainer className="h-[400px] dark:border rounded-md overflow-hidden dark:border-primary" center={[parseFloat(latitude), parseFloat(longitude)]} zoom={13} scrollWheelZoom={false}>
                <TileLayer
                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

@@ -13,6 +13,7 @@ import SocialMediaIcons from "@/app/(root)/(routes)/[activityId]/components/Soci
 import ClientOnly from "@/components/ClientOnly";
 import DeleteEditButtons from "@/app/(root)/(routes)/[activityId]/components/DeleteEditButtons";
 import {BadgeCheck, Coins} from "lucide-react";
+import Title from "@/components/Title";
 
 const ActivityDetail = async ({params}: { params: { activityId: string } }) => {
 
@@ -33,15 +34,17 @@ const ActivityDetail = async ({params}: { params: { activityId: string } }) => {
 
     return (
         <div className="mt-10 space-y-10 w-3/4 mx-auto">
+
             <div className="flex items-center justify-between">
-                <h2 className="text-xl font-bold">Activity Detail</h2>
+                <Title title="Activity Detail" description="The time of the activity, the address, the price and more information." />
                 <DeleteEditButtons/>
             </div>
+
             <Separator/>
 
             <div className="space-y-5">
                 <div className="flex items-center justify-between">
-                    <h2 className="text-xl font-bold">{activity.title}</h2>
+                    <Title title={activity.title}/>
                     <div className="space-x-5">
                         {activity.isFree && <Badge>
                             <Coins className="w-4 h-4 mr-1"/>
@@ -61,7 +64,7 @@ const ActivityDetail = async ({params}: { params: { activityId: string } }) => {
             <Separator/>
 
             <div className="space-y-5">
-                <h2 className="text-xl font-bold">Activity Information</h2>
+                <Title title="Activity Information" description="city, place, date, time,  address, organizers..." />
                 <Separator/>
                 <ActivityInformation activity={activity}/>
             </div>
@@ -72,14 +75,14 @@ const ActivityDetail = async ({params}: { params: { activityId: string } }) => {
             <Separator/>
 
             <div className="space-y-5">
-                <h2 className="text-xl font-bold">Armchair Layout</h2>
+                <Title title="Armchair Layout" description="You can fallow the activity from the place that suits you..." />
                 <ChairLayout activity={activity}/>
             </div>
 
             <Separator/>
 
             <div className="space-y-5">
-                <h2 className="text-xl font-bold">Activity Map</h2>
+                <Title title="Activity Map" description="Find the location of the city of the activity..."/>
                 <ClientOnly>
                     <Map latitude={activity.latitude} longitude={activity.longitude} />
                 </ClientOnly>
