@@ -7,7 +7,7 @@ interface Props {
 
 const Title: React.FC<Props> = ({title, description}) => {
     return (
-        <div>
+        <div className="flex flex-col">
             <h2 className="text-xl font-bold capitalize">{title}</h2>
             <p className="text-xs font-semibold">{description}</p>
         </div>

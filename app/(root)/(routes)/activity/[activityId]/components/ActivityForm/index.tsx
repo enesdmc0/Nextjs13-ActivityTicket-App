@@ -298,6 +298,9 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                                                     selected={field.value}
                                                     onSelect={field.onChange}
                                                     initialFocus
+                                                    disabled={(date) =>
+                                                         date > new Date("2024-01-01") || date < new Date("2023-05-01")
+                                                    }
                                                 />
                                             </PopoverContent>
                                         </Popover>

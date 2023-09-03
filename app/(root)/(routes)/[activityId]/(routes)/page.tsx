@@ -35,7 +35,6 @@ const ActivityDetail = async ({params}: { params: { activityId: string } }) => {
         redirect("/")
     }
 
-    console.log(activity, "test")
 
     return (
         <div className="mt-10 space-y-10 w-full xl:w-3/4 px-5 xl:mx-auto">
