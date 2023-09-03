@@ -47,7 +47,7 @@ const formSchema = z.object({
     city: z.string().min(2),
     place: z.string().min(2),
     dob: z.date(),
-    activityTime: z.string(),
+    activityTime: z.string().min(5),
     organizers: z.string().min(2),
     images: z.object({url: z.string()}).array(),
     address: z.string().min(2),
@@ -85,10 +85,10 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
             category: "",
             city: "",
             place: "",
-            dob: undefined,
+            dob: new Date(),
             activityTime: "",
             organizers: "",
-            images: [],
+            images: [{url: "https://images.unsplash.com/photo-1692678421419-eb41ae0a7aa0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxNHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"}],
             address: "",
             isPopuler: false,
             isFree: false,
@@ -194,6 +194,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                                 )}
                             />
                         </div>
+
                         {/*CITY (1)*/}
                         <div className="col-span-2 sm:col-span-1">
                             <FormField
@@ -263,6 +264,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                                 )}
                             />
                         </div>
+
                         {/*DATE (1) */}
                         <div className="col-span-2 sm:col-span-1">
                             <FormField

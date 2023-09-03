@@ -9,6 +9,7 @@ const Api = () => {
             <Title title="Api Document" description="Api CRUD operations document" />
             <Separator/>
             <ApiList entityName="activity" entityIdName="activityId"/>
+            <Separator/>
         </div>
     );
 };

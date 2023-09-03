@@ -36,9 +36,6 @@ export async function POST(request: Request) {
             price,
         } = await request.json()
 
-        // if (!images && !images.length) {
-        //     return new NextResponse(Images)
-        // }
 
         let latitude;
         let longitude;
@@ -87,9 +84,7 @@ export async function POST(request: Request) {
                 price,
                 images: {
                     createMany: {
-                        data: [
-                            ...images.map((image: {url: string}) => image)
-                        ]
+                        data: [...images.map((image: {url: string}) => image)]
                     }
                 }
             }
@@ -105,7 +100,7 @@ export async function POST(request: Request) {
 
 
 //GET ALL ACTIVITIES
-export async function GET(request: Request) {
+export async function GET() {
     try {
 
         const activities = await prisma.activity.findMany()

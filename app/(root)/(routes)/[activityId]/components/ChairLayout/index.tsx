@@ -1,9 +1,8 @@
 import React from 'react';
-import {Armchair, ChevronRight, InstagramIcon} from "lucide-react";
+import {Armchair} from "lucide-react";
 import {Activity} from "@prisma/client";
 import {Badge} from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
-import Link from "next/link";
+
 const data = [
     {
         id: "A", price: 100, chairs: [

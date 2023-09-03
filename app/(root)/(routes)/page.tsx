@@ -9,7 +9,7 @@ import ClientOnly from "@/components/ClientOnly";
 import {redirect} from "next/navigation";
 import Title from "@/components/Title";
 
-const currentDate = new Date()
+
 
 export default async function Home({searchParams}: { searchParams: { category: string, city: string, place: string, start: dateFns, end: dateFns } }) {
 
@@ -22,11 +22,7 @@ export default async function Home({searchParams}: { searchParams: { category: s
 
     //GET ALL ACTIVITIES
     const allActivities = await prisma.activity.findMany({
-        where: {
-            activityDate: {
-                gte: currentDate
-            }
-        },
+
         include: {
             images: true
         }
