@@ -4,7 +4,7 @@ import {auth} from "@clerk/nextjs";
 
 
 //UPDATE ACTIVITY
-export async function PATCH(request: Request, {params}: {params: {activityId: string}}){
+export async function PATCH(request: Request, {params}: { params: { activityId: string } }) {
     try {
         const {userId} = auth()
 
@@ -24,7 +24,7 @@ export async function PATCH(request: Request, {params}: {params: {activityId: st
             place,
             dob,
             organizers,
-            imageUrl,
+            images,
             activityTime,
             latitude,
             longitude,
@@ -35,9 +35,9 @@ export async function PATCH(request: Request, {params}: {params: {activityId: st
         } = await request.json()
 
 
-        const activity = await prisma?.activity.updateMany({
+        await prisma?.activity.update({
             where: {
-              id: params.activityId
+                id: params.activityId
             },
             data: {
                 title,
@@ -49,7 +49,9 @@ export async function PATCH(request: Request, {params}: {params: {activityId: st
                 address,
                 isPopuler,
                 isFree,
-                imageUrl,
+                images: {
+                    deleteMany: {}
+                },
                 activityDate: dob,
                 activityTime,
                 latitude,
@@ -58,9 +60,24 @@ export async function PATCH(request: Request, {params}: {params: {activityId: st
             }
         })
 
+        const activity = await prisma.activity.update({
+            where: {
+                id: params.activityId
+            },
+            data: {
+                images: {
+                    createMany: {
+                        data: [
+                            ...images.map((image: { url: string }) => image)
+                        ]
+                    }
+                }
+            }
+        })
+
         return NextResponse.json(activity)
 
-    }catch (error) {
+    } catch (error) {
         console.log("[PATCH_ACTIVITY_ERROR]", error)
         return new NextResponse("Internal Server error", {status: 500})
     }
@@ -69,7 +86,7 @@ export async function PATCH(request: Request, {params}: {params: {activityId: st
 
 
 //DELETE ACTIVITY
-export async function DELETE(request: Request, {params}: {params: {activityId: string}}){
+export async function DELETE(request: Request, {params}: { params: { activityId: string } }) {
     try {
 
         const {userId} = auth()
@@ -90,14 +107,14 @@ export async function DELETE(request: Request, {params}: {params: {activityId: s
 
         return NextResponse.json(activity)
 
-    }catch (error) {
+    } catch (error) {
         console.log("[DELETE_ACTIVITY_ERROR]", error)
         return new NextResponse("Internal Server error", {status: 500})
     }
 }
 
 //GET ACTIVITIY
-export async function GET(request: Request, {params}: {params: {activityId: string}}) {
+export async function GET(request: Request, {params}: { params: { activityId: string } }) {
     try {
 
         if (!params.activityId) {
@@ -112,7 +129,7 @@ export async function GET(request: Request, {params}: {params: {activityId: stri
 
         return NextResponse.json(activities)
 
-    }catch (error) {
+    } catch (error) {
         console.log("[GET_ACTIVITY_ERROR]", error)
         return new NextResponse("Internal server error", {status: 500})
     }

@@ -29,12 +29,16 @@ export async function POST(request: Request) {
             dob,
             activityTime,
             organizers,
-            imageUrl,
+            images,
             address,
             isPopuler,
             isFree,
             price,
         } = await request.json()
+
+        // if (!images && !images.length) {
+        //     return new NextResponse(Images)
+        // }
 
         let latitude;
         let longitude;
@@ -76,12 +80,18 @@ export async function POST(request: Request) {
                 address,
                 isPopuler,
                 isFree,
-                imageUrl,
                 activityTime,
                 activityDate: dob,
                 latitude,
                 longitude,
-                price
+                price,
+                images: {
+                    createMany: {
+                        data: [
+                            ...images.map((image: {url: string}) => image)
+                        ]
+                    }
+                }
             }
         })
 

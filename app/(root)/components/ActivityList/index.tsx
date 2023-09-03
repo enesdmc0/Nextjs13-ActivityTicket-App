@@ -8,6 +8,7 @@ import ActivityNotFound from "@/components/ActivityNotFound";
 
 const ActivityList = () => {
     const datas = useAtomValue(filteredDatasAtom)
+  
     return (
         <div className="grid grid-cols-6 gap-5">
             {datas.length === 0

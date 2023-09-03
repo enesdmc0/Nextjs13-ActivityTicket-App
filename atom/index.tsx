@@ -1,6 +1,6 @@
 import {atom} from "jotai";
 import {DateRange} from "react-day-picker";
-import {Activity} from "@prisma/client";
+import {Activity, Image as Images} from "@prisma/client";
 
 const today = new Date()
 const tomorrow = new Date(today);
@@ -15,7 +15,7 @@ const dateRange = {
 export const dateAtom = atom<DateRange>(dateRange)
 
 export const searchAtom = atom<string>("");
-export const datasAtom = atom<Activity[]>([])
+export const datasAtom = atom<(Activity & { images: Images[] })[]>([])
 
 export const filteredDatasAtom = atom( (get) => {
     const datas = get(datasAtom);

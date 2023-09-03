@@ -35,7 +35,7 @@ import axios from "axios";
 import {useParams, useRouter} from "next/navigation";
 import toast from "react-hot-toast";
 import ImageUpload from "@/components/ui/image-upload";
-import {Activity} from "@prisma/client";
+import {Activity, Image} from "@prisma/client";
 import {Separator} from "@/components/ui/separator";
 import Title from "@/components/Title";
 
@@ -49,7 +49,7 @@ const formSchema = z.object({
     dob: z.date(),
     activityTime: z.string(),
     organizers: z.string().min(2),
-    imageUrl: z.string(),
+    images: z.object({url: z.string()}).array(),
     address: z.string().min(2),
     isPopuler: z.boolean(),
     isFree: z.boolean(),
@@ -57,7 +57,9 @@ const formSchema = z.object({
 })
 
 interface Props {
-    initialData: Activity | null
+    initialData: Activity & {
+        images: Image[]
+    } | null
 }
 
 type ActivityValues = z.infer<typeof formSchema>
@@ -86,7 +88,7 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
             dob: undefined,
             activityTime: "",
             organizers: "",
-            imageUrl: "",
+            images: [],
             address: "",
             isPopuler: false,
             isFree: false,
@@ -339,44 +341,6 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                             />
                         </div>
 
-                        {/*IMAGE (1) */}
-                        <div className="col-span-2 sm:col-span-1">
-                            <FormField control={form.control}
-                                       name="imageUrl"
-                                       render={({field}) => (
-                                           <FormItem>
-                                               <FormLabel>Background Image</FormLabel>
-                                               <FormControl>
-                                                   <ImageUpload
-                                                       value={field.value ? [field.value] : []}
-                                                       disabled={loading}
-                                                       onChange={(url) => field.onChange(url)}
-                                                       onRemove={() => field.onChange("")}
-                                                   />
-                                               </FormControl>
-                                               <FormMessage/>
-                                           </FormItem>
-                                       )}
-                            />
-                        </div>
-
-
-                        {/*ORGANIZERS (1) */}
-                        <div className="col-span-2 sm:col-span-1">
-                            <FormField
-                                control={form.control}
-                                name="organizers"
-                                render={({field}) => (
-                                    <FormItem>
-                                        <FormLabel>Organizers</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Organizers" {...field} />
-                                        </FormControl>
-                                        <FormMessage/>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
 
                         {/*IS POPULER (1) */}
                         <div className="col-span-2 sm:col-span-1 mt-2">
@@ -432,6 +396,27 @@ const ActivityForm: React.FC<Props> = ({initialData}) => {
                                         <FormMessage/>
                                     </FormItem>
                                 )}
+                            />
+                        </div>
+
+                        {/*IMAGE (1) */}
+                        <div className="col-span-4">
+                            <FormField control={form.control}
+                                       name="images"
+                                       render={({field}) => (
+                                           <FormItem>
+                                               <FormLabel>Background Image</FormLabel>
+                                               <FormControl>
+                                                   <ImageUpload
+                                                       value={field.value.map(image => image.url)}
+                                                       disabled={loading}
+                                                       onChange={(url) => field.onChange([...field.value, {url}])}
+                                                       onRemove={(url) => field.onChange([...field.value.filter((current) => current.url !== url )])}
+                                                   />
+                                               </FormControl>
+                                               <FormMessage/>
+                                           </FormItem>
+                                       )}
                             />
                         </div>
 

@@ -2,14 +2,14 @@
 import React from 'react';
 import {Autoplay, Pagination} from 'swiper/modules';
 import {Swiper, SwiperSlide} from 'swiper/react';
-import { Activity } from '@prisma/client';
+import { Activity, Image as Images } from '@prisma/client';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
 import Image from "next/image"
 
 interface Props  {
-    activity: Activity
+    activity: Activity & {images: Images[]}
 }
 
 const SwiperActivityDetail: React.FC<Props> = ({activity}) => {
@@ -35,15 +35,15 @@ const SwiperActivityDetail: React.FC<Props> = ({activity}) => {
                 }}
             >
                 
-                {/*{activity.imagesURL.map((image, index) => (*/}
-                {/*    <SwiperSlide className='relative' key={index}>*/}
-                {/*    <Image fill src={image} className="object-cover aspect-square rounded-md" alt=""/>*/}
-                {/*    </SwiperSlide>*/}
-                {/*))}*/}
+                {activity.images.map((image, index) => (
+                    <SwiperSlide className='relative' key={index}>
+                    <Image fill src={image.url} className="object-cover aspect-square rounded-md" alt=""/>
+                    </SwiperSlide>
+                ))}
 
-                <SwiperSlide className='relative'>
-                    <Image fill src={activity.imageUrl} className="object-cover aspect-square rounded-md" alt=""/>
-                </SwiperSlide>
+                {/*<SwiperSlide className='relative'>*/}
+                {/*    <Image fill src={activity.imageUrl} className="object-cover aspect-square rounded-md" alt=""/>*/}
+                {/*</SwiperSlide>*/}
 
             </Swiper>
 

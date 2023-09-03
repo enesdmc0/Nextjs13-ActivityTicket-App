@@ -2,7 +2,7 @@
 import React from 'react';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {Button} from "@/components/ui/button";
-import {Activity} from "@prisma/client";
+import {Activity, Image as Images} from "@prisma/client";
 import {format} from "date-fns"
 import {cn} from "@/lib/utils"
 import {
@@ -21,8 +21,8 @@ import {CalendarIcon} from "lucide-react";
 import {Calendar} from "@/components/ui/calendar";
 
 interface Props {
-    activities: Activity[]
-    allActivities: Activity[]
+    activities: (Activity & {images: Images[]})[]
+    allActivities: (Activity & {images: Images[]})[]
 
 }
 

@@ -25,12 +25,17 @@ const ActivityDetail = async ({params}: { params: { activityId: string } }) => {
     const activity = await prisma?.activity.findUnique({
         where: {
             id: params.activityId
+        },
+        include: {
+            images: true
         }
     })
 
     if (!activity) {
         redirect("/")
     }
+
+    console.log(activity, "test")
 
     return (
         <div className="mt-10 space-y-10 w-full xl:w-3/4 px-5 xl:mx-auto">

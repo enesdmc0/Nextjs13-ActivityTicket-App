@@ -26,6 +26,9 @@ export default async function Home({searchParams}: { searchParams: { category: s
             activityDate: {
                 gte: currentDate
             }
+        },
+        include: {
+            images: true
         }
     })
 
@@ -33,6 +36,9 @@ export default async function Home({searchParams}: { searchParams: { category: s
     const populerActivities = await prisma?.activity.findMany({
         where: {
             isPopuler: true
+        },
+        include: {
+            images: true
         }
     })
 

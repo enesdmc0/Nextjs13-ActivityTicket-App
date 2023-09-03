@@ -8,6 +8,9 @@ const PlacePage = async ({params}: { params: { place: string } }) => {
     const activities = await prisma.activity.findMany({
         where: {
             place: params.place
+        },
+        include: {
+            images: true
         }
     })
 

@@ -12,6 +12,9 @@ const SettingsActivity = async ({params}: { params: { activityId: string } }) =>
     const activity = await prisma?.activity.findUnique({
         where: {
             id: params.activityId === "new" ? id : params.activityId
+        },
+        include: {
+            images: true
         }
     })
 

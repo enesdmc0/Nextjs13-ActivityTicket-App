@@ -2,7 +2,7 @@
 import React from 'react';
 import {Autoplay, Pagination} from 'swiper/modules';
 import {Swiper, SwiperSlide} from 'swiper/react';
-import {Activity} from '@prisma/client';
+import {Activity, Image as Images} from '@prisma/client';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import {cn} from "@/lib/utils";
@@ -12,7 +12,7 @@ import {Badge} from "@/components/ui/badge";
 import {BadgeCheck, Calendar, MapPin, Pi, UserCircle2, Wallet} from "lucide-react";
 
 interface Props {
-    populerActivities: Activity[]
+    populerActivities: (Activity & {images: Images[]})[]
     className?: React.ComponentProps<typeof Card>
 }
 
@@ -25,7 +25,6 @@ const data = [
 ]
 
 const SwiperPopulerActivities: React.FC<Props> = ({populerActivities, className, ...props}) => {
-
     return (
         <Swiper
             breakpoints={{
@@ -55,7 +54,7 @@ const SwiperPopulerActivities: React.FC<Props> = ({populerActivities, className,
                             alt="Image" className="rounded-md object-cover overflow-hidden "/>
                     </SwiperSlide>
                 )))
-                : (populerActivities.map(activity => (
+                : (populerActivities.map((activity) => (
                     <SwiperSlide className='relative ' key={activity.id}>
                         <Card className={cn("relative aspect-square cursor-pointer h-full", className)} {...props}>
                             <div className="relative z-50 text-white h-full flex flex-col justify-between">
@@ -105,21 +104,10 @@ const SwiperPopulerActivities: React.FC<Props> = ({populerActivities, className,
                                 </CardFooter>
                             </div>
 
-                            {/*{*/}
-                            {/*    activity.imagesURL.map((image, index) => (*/}
-                            {/*        <Image*/}
-                            {/*            key={index}*/}
-                            {/*            fill*/}
-                            {/*            src={image}*/}
-                            {/*            alt="Image" className="rounded-md object-cover overflow-hidden "/>*/}
-                            {/*    ))*/}
-                            {/*}*/}
-
                             <Image
                                 fill
-                                src={activity.imageUrl}
+                                src={activity.images[0].url}
                                 alt="Image" className="rounded-md object-cover overflow-hidden "/>
-
                         </Card>
 
                     </SwiperSlide>

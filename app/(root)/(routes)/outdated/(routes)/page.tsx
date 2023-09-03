@@ -15,12 +15,15 @@ const Outdated = async () => {
             activityDate: {
                 lt: currentDate
             }
+        },
+        include: {
+            images: true
         }
     })
 
 
     return (
-        <div className="mt-10 space-y-10 w-3/4 mx-auto">
+        <div className="mt-10 space-y-10 w-full xl:w-3/4 px-5 xl:mx-auto">
             <div className="space-y-5">
                 <Title title="Outdated Activities"
                        description={`${currentDate.toDateString()} Activities before`}/>
@@ -29,7 +32,9 @@ const Outdated = async () => {
                     ? (<ActivityNotFound description="No overdue activity found."/>)
                     : (<div className="grid grid-cols-3 gap-5">
                         {activities.map(activity => (
-                            <Card key={activity.id} activity={activity} isOutdated/>
+                            <div key={activity.id} className="col-span-3 md:col-span-2  xl:col-span-1">
+                                <Card  activity={activity} isOutdated/>
+                            </div>
                         ))}
                     </div>)
                 }

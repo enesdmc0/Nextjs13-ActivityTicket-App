@@ -20,6 +20,9 @@ export default async function getFilteredActivities(category: string, city: stri
                         gte: stringStartDate,
                         lte: stringEndDate
                     }
+                },
+                include: {
+                    images: true
                 }
             })
 
@@ -36,6 +39,9 @@ export default async function getFilteredActivities(category: string, city: stri
                 activityDate: {
                     gte: currentDate
                 }
+            },
+            include: {
+                images: true
             }
         })
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {cn} from "@/lib/utils";
 import {CardDescription, CardFooter, CardHeader, CardTitle, Card} from "@/components/ui/card";
-import {Activity} from "@prisma/client";
+import {Activity, Image as Images} from "@prisma/client";
 import {Badge} from "@/components/ui/badge";
 import {BadgeCheck, Calendar, ChevronRight, Coins, MapPin, Pi, UserCircle2, Wallet} from "lucide-react";
 import {Button} from "@/components/ui/button";
@@ -10,13 +10,13 @@ import Image from "next/image";
 
 interface Props {
     className?: React.ComponentProps<typeof Card>
-    activity: Activity
+    activity: Activity & {images: Images[]}
     isOutdated?: boolean;
 }
 
 
 const CardComponent: React.FC<Props> = ({className, activity, isOutdated, ...props}) => {
-
+    const firstImage = activity.images[0].url
     return (
         <Card
             className={cn("col-span-6 md:col-span-3 xl:col-span-2 relative cursor-pointer bg-secondary rounded-md aspect-square overflow-hidden", className)} {...props}>
@@ -83,7 +83,7 @@ const CardComponent: React.FC<Props> = ({className, activity, isOutdated, ...pro
                 </CardFooter>
             </div>
 
-            <Image src={activity.imageUrl} alt="" fill />
+            <Image src={firstImage} alt="" fill />
             {isOutdated && <div
                 className="absolute top-0 left-0 p-3 bg-black rounded-md h-full w-full z-50 opacity-30 hover:opacity-80 text-red-600 font-bold">OUTDATED</div>}
 

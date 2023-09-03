@@ -5,9 +5,10 @@ import {Activity} from "@prisma/client";
 import {useSetAtom, useAtom} from "jotai";
 import {datasAtom, searchAtom} from "@/atom";
 import {Button} from "@/components/ui/button";
+import {Image as Images} from ".prisma/client";
 
 interface Props {
-    activities: Activity[]
+    activities: (Activity & {images: Images[]})[]
 }
 
 const Search: React.FC<Props> = ({activities}) => {

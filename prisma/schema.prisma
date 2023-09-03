@@ -18,14 +18,26 @@ model Activity {
   city         String
   place        String
   createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
   activityDate DateTime
   activityTime String
   organizers   String
-  imageUrl     String
+  images       Image[]
   latitude     String
   longitude    String
   address      String
   isPopuler    Boolean
   isFree       Boolean
   price        Int
+}
+
+model Image {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  activityId String   @db.ObjectId
+  activity   Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)
+  url        String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([activityId])
 }
