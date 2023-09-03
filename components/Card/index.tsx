@@ -39,7 +39,7 @@ const CardComponent: React.FC<Props> = ({className, activity, isOutdated, ...pro
                         </span>
                     </CardTitle>
                     <CardDescription>
-                       <span className="bg-secondary text-md text-secondary-foreground font-semibold rounded-md p-1">{activity.title}</span>
+                       <p className="bg-secondary text-md text-secondary-foreground font-semibold rounded-md p-1">{activity.title}</p>
                     </CardDescription>
 
                 </CardHeader>
@@ -49,27 +49,27 @@ const CardComponent: React.FC<Props> = ({className, activity, isOutdated, ...pro
                         <div className="col-span-4 space-y-2 space-x-3">
                             <Badge>
                                 <MapPin className="w-4 h-4 mr-1"/>
-                                <span className="capitalize">{activity.city}</span>
+                                <p className="capitalize">{activity.city}</p>
                             </Badge>
                             <Badge>
                                 <Pi className="w-4 h-4 mr-1"/>
-                                <span className="capitalize">{activity.category}</span>
+                                <p className="capitalize">{activity.category}</p>
                             </Badge>
                             <Badge>
                                 <UserCircle2 className="w-4 h-4 mr-1"/>
-                                <span className="capitalize">{activity.organizers}</span>
+                                <p className="capitalize">{activity.organizers}</p>
                             </Badge>
 
                             {activity.price !== 0 &&
                                 <Badge>
                                     <Wallet className="w-4 h-4 mr-1"/>
-                                    <span>{activity.price} TL</span>
+                                    <p>{activity.price} TL</p>
                                 </Badge>
                             }
 
                             <Badge variant="secondary">
                                 <Calendar className="w-4 h-4 mr-1"/>
-                                <span className="capitalize">{activity.activityDate.toDateString()}</span>
+                                <p className="capitalize">{activity.activityDate.toDateString()}</p>
                             </Badge>
                         </div>
 

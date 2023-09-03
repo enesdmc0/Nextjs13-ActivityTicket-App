@@ -30,9 +30,9 @@ const Outdated = async () => {
                 <Separator/>
                 {activities.length === 0
                     ? (<ActivityNotFound description="No overdue activity found."/>)
-                    : (<div className="grid grid-cols-3 gap-5">
+                    : (<div className="grid grid-cols-6 gap-5">
                         {activities.map(activity => (
-                            <div key={activity.id} className="col-span-3 md:col-span-2  xl:col-span-1">
+                            <div key={activity.id} className="col-span-6 sm:col-span-3  xl:col-span-2">
                                 <Card  activity={activity} isOutdated/>
                             </div>
                         ))}
