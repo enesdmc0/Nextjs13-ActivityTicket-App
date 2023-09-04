@@ -107,7 +107,7 @@ npm run dev
 
 > ### Project Link
 >
-> [**https://github.com/enesdmc0/Table-Work**][projectLink]
+> [**https://github.com/enesdmc0/Nextjs13-ActivityTicket-App**][projectLink]
 
 
 
@@ -144,7 +144,7 @@ npm run dev
 [mail]: enesdmcc@gmail.com
 [twitter]: https://twitter.com/enesdmc00
 [linkedin]: inkedin.com/in/enesdemirci1
-[projectLink]: https://github.com/enesdmc0/Table-Work
+[projectLink]: https://github.com/enesdmc0/Nextjs13-ActivityTicket-App
 
 
 
